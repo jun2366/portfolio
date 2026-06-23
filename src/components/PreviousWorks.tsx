@@ -8,7 +8,7 @@ import SellerBuyerAutomation from "@/assets/Seller and Buyer Automation.jpeg";
 import AIAgentforFacebookProject from "@/assets/AI Agent for Facebook Project.png";
 import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
 import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
-import IPCR  from "@/assets/IPCR System.png";
+import IPCR  from "@/assets/ipcr-system.png";
 
 
 
