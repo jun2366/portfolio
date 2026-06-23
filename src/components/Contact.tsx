@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, User, MessageSquare, Linkedin, ExternalLink, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import resumeImg from "@/assets/jun_resume.jpg";
+import resumeImg from "@/assets/jun_resume.pdf";
 import locationImg from "@/assets/location.png";
 import { Printer } from "lucide-react";
 const Contact = () => {
@@ -68,7 +68,7 @@ const Contact = () => {
                     <Phone className="w-6 h-6 text-[#2BD4BD] mt-1" />
                     <div>
                       <p className="text-xs font-mono text-text-tertiary uppercase">PHONE</p>
-                      <p className="text-white text-sm">09466756041</p>
+                      <p className="text-white text-sm">09945084712</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3 p-4 bg-[#112E2D] rounded-lg">
