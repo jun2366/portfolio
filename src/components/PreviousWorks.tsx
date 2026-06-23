@@ -151,6 +151,7 @@ const PreviousWorks = () => {
     "Zapier",
     "n8n",
     "GoHighLevel",
+    "Web Development",
     /*
     "Webflow",
     "WordPress",
