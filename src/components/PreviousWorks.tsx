@@ -8,6 +8,8 @@ import SellerBuyerAutomation from "@/assets/Seller and Buyer Automation.jpeg";
 import AIAgentforFacebookProject from "@/assets/AI Agent for Facebook Project.png";
 import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
 import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
+import IPCR  from "@/assets/IPCR System.png";
+
 
 
 
@@ -98,16 +100,17 @@ const projects: Project[] = [
     image: SellerBuyerAutomation,
     link: "https://drive.google.com/drive/folders/1rhZuHOrB8j5hXnqA6eESEd4d-_hNGViO?usp=sharing",
   },
-  /*
+  
   {
-    title: "Cresta AI Call Analytics Integration",
-    subtitle: "GoHighLevel Automation",
+    title: "IPCR Management System",
+    subtitle: "Streamlining Employee Performance Evaluation and Reporting",
     description:
-      "Built a complete Cresta-to-GoHighLevel integration for a Medicare sales team. Created 9 custom CRM fields mapped to Cresta AI call data, automated workflows that trigger on field changes to tag contacts and notify team members. Tracks compliance fields (TPMO, SOA, Recording Consent) and enriches contact profiles with call intelligence data from 14,275+ calls.",
-    tags: ["GoHighLevel", "cresta", "api", "medicare", "automation", "compliance"],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=drive_link",
+      "A web-based performance evaluation platform that digitizes the Individual Performance Commitment and Review (IPCR) process. The system enables users to manage performance targets, automate rating calculations, generate narrative assessments, and produce printable reports, improving accuracy and efficiency in employee performance evaluation workflows. Built using Core PHP, HTML, CSS, JavaScript, and MySQL/JSON-based data storage.",
+    tags: ["PHP", "MySQL", "HTML", "CSS", "html", "Data Management","Performance Management"],
+    image: IPCR,
+    link: "https://github.com/jun2366/IPCR.git",
   }, 
+  /*
   {
     title: "Business Website with Elementor",
     subtitle: "WordPress Development",
