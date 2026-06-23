@@ -106,7 +106,7 @@ const projects: Project[] = [
     subtitle: "Streamlining Employee Performance Evaluation and Reporting",
     description:
       "A web-based performance evaluation platform that digitizes the Individual Performance Commitment and Review (IPCR) process. The system enables users to manage performance targets, automate rating calculations, generate narrative assessments, and produce printable reports, improving accuracy and efficiency in employee performance evaluation workflows. Built using Core PHP, HTML, CSS, JavaScript, and MySQL/JSON-based data storage.",
-    tags: ["PHP", "MySQL", "HTML", "CSS", "html", "Data Management","Performance Management"],
+    tags: ["PHP", "MySQL", "HTML", "CSS", "html", "Data Management","Performance Management", "Web Development"],
     image: IPCR,
     link: "https://github.com/jun2366/IPCR.git",
   }, 
