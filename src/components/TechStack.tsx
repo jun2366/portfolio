@@ -21,6 +21,8 @@ const marqueeTools = [...techTools, ...techTools];
 
 const TechStack = () => {
   const revealRef = useScrollReveal();
+  const fallbackIcon =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%239CA3AF'/%3E%3Cpath d='M7 8h10v2H7zm0 4h7v2H7zm0 4h6v2H7z' fill='%23ffffff'/%3E%3C/svg%3E";
 
   return (
     <section ref={revealRef} className="relative py-20 overflow-hidden reveal">
@@ -47,6 +49,11 @@ const TechStack = () => {
                 <img
                   src={tool.icon}
                   alt={tool.name}
+                  onError={(event) => {
+                    const target = event.currentTarget;
+                    target.onerror = null;
+                    target.src = fallbackIcon;
+                  }}
                   className="w-6 h-6 md:w-7 md:h-7 opacity-[0.85] transition-all duration-300 ease-in-out group-hover/tool:opacity-100 group-hover/tool:drop-shadow-[0_0_6px_hsl(var(--glow)/0.4)]"
                   loading="lazy"
                 />
