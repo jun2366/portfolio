@@ -5,7 +5,6 @@ const techTools = [
   { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel" },
   { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql" },
   { name: "HTML5", icon: "https://cdn.simpleicons.org/html5" },
-  { name: "CSS3", icon: "https://cdn.simpleicons.org/css3" },
   { name: "JavaScript", icon: "https://cdn.simpleicons.org/javascript" },
   { name: "React", icon: "https://cdn.simpleicons.org/react" },
   { name: "Tailwind CSS", icon: "https://cdn.simpleicons.org/tailwindcss" },
