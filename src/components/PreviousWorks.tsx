@@ -9,6 +9,7 @@ import AIAgentforFacebookProject from "@/assets/AI Agent for Facebook Project.pn
 import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
 import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
 import IPCR  from "@/assets/ipcr-system.png";
+import ADU   from "@/assets/ADU.png";
 
 
 
@@ -110,17 +111,17 @@ const projects: Project[] = [
     image: IPCR,
     link: "https://github.com/jun2366/IPCR.git",
   }, 
-  /*
+  
   {
-    title: "Business Website with Elementor",
-    subtitle: "WordPress Development",
+    title: "ADU Exchange (United States)",
+    subtitle: "Frontend Development",
     description:
-      "Full business website built with WordPress and Elementor, featuring service pages, blog, contact forms, and basic SEO setup.",
-    tags: ["WordPress",],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=drive_link",
+      "Developed a responsive lead-generation website for a U.S.-based ADU (Accessory Dwelling Unit) consulting and development company. The platform was designed to educate homeowners on ADU opportunities, showcase services, and convert visitors into qualified leads through strategic call-to-actions and conversion-focused user experience. Built using a custom frontend stack consisting of HTML5, Tailwind CSS, and JavaScript, with integrated marketing analytics and tracking tools to support campaign performance measurement and customer acquisition efforts.",
+    tags: ["JavaScript", "Tailwind CSS", "HTML 5", "UI/UX", "Marketing Website", "Web Development", "Lead Generation", "Responsive Design"],
+    image: ADU,
+    link: "https://www.theaduexchange.com/",
   },
-   
+   /*
   {
     title: "ASV Development – Construction Company Website",
     subtitle: "Business Website Development",
