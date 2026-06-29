@@ -4,6 +4,7 @@ import ToolsMarquee from "@/components/ToolsMarquee";
 import TechStack from "@/components/TechStack";
 import Services from "@/components/Services";
 import PreviousWorks from "@/components/PreviousWorks";
+import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ const Index = () => {
       <TechStack />
       <Services />
       <PreviousWorks />
+      <Certificates />
       <Contact />
       <Footer />
     </div>
