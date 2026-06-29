@@ -8,6 +8,8 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+const calendlyUrl = "https://calendly.com/junrielpajal8/30min";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -17,6 +19,21 @@ const Navbar = () => {
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, []);
+
+  const handleBookCallClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setOpen(false);
+
+    const calendly = (window as Window & {
+      Calendly?: { initPopupWidget: (options: { url: string }) => void };
+    }).Calendly;
+
+    if (calendly) {
+      calendly.initPopupWidget({ url: calendlyUrl });
+    } else {
+      window.open(calendlyUrl, "_blank", "noopener,noreferrer");
     }
   }, []);
 
@@ -37,8 +54,8 @@ const Navbar = () => {
             </a>
           ))}
           <a
-            href="#contact"
-            onClick={(e) => handleNavClick(e, "#contact")}
+            href="#"
+            onClick={handleBookCallClick}
             className="text-sm font-semibold text-primary-foreground bg-primary px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-200 active:scale-[0.97] hover:shadow-[0_0_20px_-5px_hsl(var(--glow)/0.3)]"
           >
             Book a Call
@@ -68,8 +85,8 @@ const Navbar = () => {
               </a>
             ))}
             <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
+              href="#"
+              onClick={handleBookCallClick}
               className="text-sm font-semibold text-primary-foreground bg-primary px-4 py-2.5 rounded-lg text-center active:scale-[0.97]"
             >
               Book a Call

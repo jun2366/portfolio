@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, User, MessageSquare, Linkedin, ExternalLink, Phone, MapPin } from "lucide-react";
+import { ArrowRight, Mail, User, MessageSquare, Linkedin, ExternalLink, Phone, MapPin, FileText } from "lucide-react";
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import resumeImg from "@/assets/jun_resume.pdf";
 import locationImg from "@/assets/location.png";
-import { Printer } from "lucide-react";
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const headerRef = useScrollReveal();
@@ -13,15 +11,6 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-  };
-
-  const printResume = () => {
-    const w = window.open(resumeImg);
-    if (w) {
-      w.addEventListener("load", () => {
-        w.print();
-      });
-    }
   };
 
   return (
@@ -190,13 +179,16 @@ const Contact = () => {
                     <ExternalLink className="w-4 h-4" />
                     OnlineJobs.ph
                   </a>
-                  <button
-                    onClick={printResume}
+                  <a
+                    href="/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#2BD4BD] text-[#112E2D] text-sm font-medium hover:bg-[#25b7a3] transition-colors duration-200"
                   >
-                    <Printer className="w-4 h-4" />
-                    Print CV
-                  </button>
+                    <FileText className="w-4 h-4" />
+                    View Resume
+                  </a>
+
                 </div>
               </div>
             </div>
