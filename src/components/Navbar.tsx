@@ -1,5 +1,6 @@
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { useState, useCallback } from "react";
+import { useTheme } from "@/hooks/use-theme";
 
 const navLinks = [
   { label: "Services", href: "#services" },
@@ -12,6 +13,7 @@ const calendlyUrl = "https://calendly.com/junrielpajal8/30min";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl transition-colors duration-300">
       <div className="container flex items-center justify-between h-16 px-6">
         <div className="hidden md:block" />
 
@@ -53,6 +55,17 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg hover:bg-surface transition-colors duration-200 text-text-secondary hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </button>
           <a
             href="#"
             onClick={handleBookCallClick}
@@ -62,13 +75,26 @@ const Navbar = () => {
           </a>
         </div>
 
-        <button
-          className="md:hidden text-foreground"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg hover:bg-surface transition-colors duration-200 text-text-secondary hover:text-foreground"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
+          </button>
+          <button
+            className="text-foreground"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {open && (
