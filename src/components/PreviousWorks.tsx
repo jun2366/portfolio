@@ -63,7 +63,7 @@ const projects: Project[] = [
       "Self-hosted AI chatbot that automatically responds to Facebook Messenger inquiries using a custom company knowledge base. Built with Google Gemini as the chat model, includes conversation memory for context-aware responses, and uses webhooks to connect with Facebook's API in real-time.",
     tags: ["n8n", "Facebook", "Gemini", "Webhook", "Chatbot",],
     image: AIAgentforFacebookProject,
-    link: "https://drive.google.com/drive/folders/1bkT_E733vG3HQXxNPczBZwZop0_Yiztm?usp=sharing",
+    link: "https://drive.google.com/drive/folders/1sWgYUY4hSmUtt11N_RwxacrvEuvsdfz2?usp=sharing",
   },
   {
     title: "AI Lead Qualifier Automation",
