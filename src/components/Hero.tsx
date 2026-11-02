@@ -2,6 +2,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import profileImg from "@/assets/profile.jpg";
+import FacePixels from "@/components/FacePixels";
+import type { FaceCrop } from "@/lib/face-pixels";
+
+// Head-and-shoulders square from the 1024×1024 photo; the negative y adds headroom above the hair.
+const PROFILE_CROP: FaceCrop = { x: 165 / 1024, y: -24 / 1024, w: 700 / 1024, h: 700 / 1024 };
 
 const Hero = () => {
   const revealRef = useScrollReveal();
@@ -20,14 +25,8 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Profile Picture & Identity */}
           <div className="mb-10 flex flex-col items-center gap-4 animate-fade-in">
-            <div className="relative">
-              <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-2 border-primary/30 glow-border">
-                <img
-                  src={profileImg}
-                  alt="Junriel Pajal - Automation Specialist"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="w-[220px] md:w-[300px] aspect-square">
+              <FacePixels src={profileImg} alt="Photo of Junriel T. Pajal" crop={PROFILE_CROP} mobileColumns={48} />
             </div>
             <div>
               <h2 className="text-xl md:text-2xl font-bold tracking-tight">Junriel Pajal</h2>
