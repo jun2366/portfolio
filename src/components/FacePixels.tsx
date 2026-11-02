@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { buildFaceMask, sampleCells, type FaceCells, type FaceCrop, type FaceMask } from "@/lib/face-pixels";
+import { buildCutout, buildFaceMask, sampleCells, type FaceCells, type FaceCrop, type FaceMask } from "@/lib/face-pixels";
 
 interface FacePixelsProps {
   src: string;
@@ -19,6 +19,8 @@ const MAX_DELAY = 1650;
 const HOP = 0.08;
 /** Share of cells that fly in from beyond the canvas edges. */
 const OUTSIDE_SHARE = 0.3;
+/** Crossfade from the pixel face to the real photo once every cell has landed. */
+const PHOTO_FADE_MS = 600;
 
 const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 const easeOutBack = (t: number) => {
@@ -134,15 +136,18 @@ function drawFrame(ctx: CanvasRenderingContext2D, scene: Scene, elapsed: number,
 const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns = 36, className }: FacePixelsProps) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const photoRef = useRef<HTMLCanvasElement>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "failed">("loading");
 
   useEffect(() => {
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+    const photo = photoRef.current;
+    const photoCtx = photo?.getContext("2d");
     const layer = document.createElement("canvas");
     const layerCtx = layer.getContext("2d");
-    if (!wrap || !canvas || !ctx || !layerCtx) {
+    if (!wrap || !canvas || !ctx || !photo || !photoCtx || !layerCtx) {
       setStatus("failed");
       return;
     }
@@ -151,6 +156,7 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
     const small = window.matchMedia("(max-width: 767px)");
     let cancelled = false;
     let mask: FaceMask | null = null;
+    let cutout: HTMLCanvasElement | null = null;
     let scene: Scene | null = null;
     let width = 0;
     let height = 0;
@@ -158,11 +164,39 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
     let lastTime = 0;
     let elapsed = 0;
     let finished = false;
+    let photoShown = false;
     let inView = false;
 
+    // Drawn at the full device pixel ratio (not the capped one used for the animation) so the photo stays sharp.
+    const drawPhoto = () => {
+      if (!cutout || width === 0) return;
+      const dpr = window.devicePixelRatio || 1;
+      photo.width = Math.round(width * dpr);
+      photo.height = Math.round(height * dpr);
+      photoCtx.imageSmoothingEnabled = true;
+      photoCtx.imageSmoothingQuality = "high";
+      photoCtx.drawImage(cutout, 0, 0, photo.width, photo.height);
+    };
+
+    /** Swaps the pixel face for the real photo; `immediate` skips the crossfade. */
+    const showPhoto = (immediate: boolean) => {
+      if (photoShown || !cutout) return;
+      photoShown = true;
+      pause();
+      drawPhoto();
+      const transition = immediate ? "none" : `opacity ${PHOTO_FADE_MS}ms ease`;
+      canvas.style.transition = photo.style.transition = transition;
+      photo.style.opacity = "1";
+      canvas.style.opacity = "0";
+    };
+
     const render = () => {
-      if (!scene || width === 0) return;
-      if (reducedMotion.matches) elapsed = Infinity;
+      if (!scene || width === 0 || photoShown) return;
+      if (reducedMotion.matches) {
+        showPhoto(true);
+        if (photoShown) return;
+        elapsed = Infinity;
+      }
       finished = drawFrame(ctx, scene, elapsed, width, height);
     };
 
@@ -172,7 +206,8 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
       if (lastTime) elapsed += Math.min(now - lastTime, 50);
       lastTime = now;
       render();
-      if (!finished) raf = requestAnimationFrame(tick);
+      if (finished) showPhoto(false);
+      else raf = requestAnimationFrame(tick);
     };
 
     const pause = () => {
@@ -181,7 +216,7 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
     };
 
     const play = () => {
-      if (raf || finished || !scene || !inView || document.hidden) return;
+      if (raf || finished || photoShown || !scene || !inView || document.hidden) return;
       if (reducedMotion.matches) {
         render();
         return;
@@ -200,12 +235,17 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
       canvas.height = layer.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       layerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (photoShown) {
+        drawPhoto();
+        return;
+      }
       if (scene) repaintLayer(scene, width, height);
       render();
     };
 
     const rebuild = () => {
-      if (!mask) return;
+      // Once the photo is showing, a breakpoint change keeps it instead of replaying the pixels.
+      if (!mask || photoShown) return;
       const wasFinished = finished;
       pause();
       scene = createScene(sampleCells(mask, small.matches ? mobileColumns : columns), layer, layerCtx);
@@ -242,6 +282,8 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
         if (cancelled) return;
         mask = buildFaceMask(img, crop);
         if (!mask) throw new Error("FacePixels: could not sample image");
+        // Without a cutout the finished pixel face simply stays.
+        cutout = buildCutout(mask);
         resize();
         rebuild();
         setStatus("ready");
@@ -259,6 +301,7 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
       cancelled = true;
       pause();
       layer.width = layer.height = 0;
+      if (cutout) cutout.width = cutout.height = 0;
       intersection.disconnect();
       resizeObserver.disconnect();
       small.removeEventListener("change", rebuild);
@@ -273,6 +316,11 @@ const FacePixels = ({ src, alt, crop = FULL_IMAGE, columns = 60, mobileColumns =
         ref={canvasRef}
         aria-hidden="true"
         className={cn("block w-full", status === "failed" && "hidden")}
+      />
+      <canvas
+        ref={photoRef}
+        aria-hidden="true"
+        className={cn("absolute inset-0 w-full h-full opacity-0", status === "failed" && "hidden")}
       />
       <img
         src={src}

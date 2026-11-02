@@ -100,6 +100,68 @@ export function buildFaceMask(img: HTMLImageElement, crop: FaceCrop): FaceMask |
   return { width, height, rgba, keep };
 }
 
+/** Pixels shaved off the cutout edge, removing the light fringe where hair blends into the white backdrop. */
+export const CUTOUT_ERODE = 1;
+/** Box-blur passes (radius 1 each) applied to the cutout alpha to soften the stair-stepped edge. */
+export const CUTOUT_FEATHER_PASSES = 2;
+
+/**
+ * The cropped photo at mask resolution with the background made transparent.
+ * The edge is eroded slightly and then feathered; the image edges count as foreground
+ * so the shoulders cut off by the crop stay solid.
+ */
+export function buildCutout(mask: FaceMask): HTMLCanvasElement | null {
+  const { width, height, rgba, keep } = mask;
+  const total = width * height;
+  let alpha = new Float32Array(total);
+  for (let i = 0; i < total; i++) alpha[i] = keep[i];
+
+  for (let pass = 0; pass < CUTOUT_ERODE; pass++) {
+    const eroded = alpha.slice();
+    for (let i = 0; i < total; i++) {
+      if (!alpha[i]) continue;
+      const x = i % width;
+      if ((x > 0 && !alpha[i - 1]) || (x < width - 1 && !alpha[i + 1]) || (i >= width && !alpha[i - width]) || (i < total - width && !alpha[i + width])) {
+        eroded[i] = 0;
+      }
+    }
+    alpha = eroded;
+  }
+
+  const tmp = new Float32Array(total);
+  for (let pass = 0; pass < CUTOUT_FEATHER_PASSES; pass++) {
+    // Separable 3-tap box blur, clamping at the image edges.
+    for (let y = 0; y < height; y++) {
+      const row = y * width;
+      for (let x = 0; x < width; x++) {
+        tmp[row + x] = (alpha[row + Math.max(0, x - 1)] + alpha[row + x] + alpha[row + Math.min(width - 1, x + 1)]) / 3;
+      }
+    }
+    for (let y = 0; y < height; y++) {
+      const up = Math.max(0, y - 1) * width;
+      const down = Math.min(height - 1, y + 1) * width;
+      const row = y * width;
+      for (let x = 0; x < width; x++) alpha[row + x] = (tmp[up + x] + tmp[row + x] + tmp[down + x]) / 3;
+    }
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return null;
+  const out = ctx.createImageData(width, height);
+  for (let i = 0; i < total; i++) {
+    const o = i * 4;
+    out.data[o] = rgba[o];
+    out.data[o + 1] = rgba[o + 1];
+    out.data[o + 2] = rgba[o + 2];
+    out.data[o + 3] = Math.round(alpha[i] * 255);
+  }
+  ctx.putImageData(out, 0, 0);
+  return canvas;
+}
+
 /** Averages the mask into a cols × rows grid, keeping cells that are mostly person. */
 export function sampleCells(mask: FaceMask, cols: number): FaceCells {
   const { width, height, rgba, keep } = mask;
