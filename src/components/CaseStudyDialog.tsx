@@ -1,6 +1,8 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ArrowUpRight, X } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { CHIP_CLASS, projectCategory } from "@/lib/categories";
+import { cn } from "@/lib/utils";
 
 interface CaseStudyDialogProps {
   project: Project | null;
@@ -20,6 +22,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
   const hasChallenge = Boolean(project.challenge);
   const hasSolution = Boolean(project.solution);
   const results = project.results ?? [];
+  const chip = CHIP_CLASS[projectCategory(project.tags)];
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
@@ -27,7 +30,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
         <DialogPrimitive.Overlay className="case-study-motion fixed inset-0 z-[60] bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0" />
         <DialogPrimitive.Content className="case-study-motion fixed left-1/2 top-1/2 z-[60] flex max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-3xl -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl duration-200 focus:outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95">
           <DialogPrimitive.Close
-            className="absolute right-3 top-3 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-md backdrop-blur hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+            className="btn btn-icon absolute right-3 top-3 z-10 h-11 w-11 rounded-full border border-border shadow-md md:h-11 md:w-11"
             aria-label="Close case study"
           >
             <X className="h-5 w-5" aria-hidden="true" />
@@ -46,7 +49,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
 
             <div className="space-y-8 p-5 sm:p-8">
               <header className="space-y-3">
-                <span className="inline-block rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-primary">
+                <span className={cn("inline-block rounded-full px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider", chip)}>
                   {project.category}
                 </span>
                 <DialogPrimitive.Title className="pr-10 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
@@ -91,7 +94,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
                 </h3>
                 <ul className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <li key={tag} className="rounded-md bg-primary/10 px-2.5 py-1 font-mono text-xs text-primary">
+                    <li key={tag} className={cn("rounded-md px-2.5 py-1 font-mono text-xs", chip)}>
                       {tag}
                     </li>
                   ))}
@@ -120,7 +123,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                    className="btn btn-solid min-h-11 px-4 py-2.5 text-sm"
                   >
                     View Project
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

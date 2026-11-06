@@ -3,6 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Apply the saved theme (or the device preference) before first paint to avoid a flash of the wrong theme. -->
+    <script>
+      (function () {
+        var dark;
+        try {
+          var saved = localStorage.getItem("portfolio-theme");
+          dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        } catch (e) {
+          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        var root = document.documentElement;
+        if (dark) root.classList.add("dark");
+        root.style.colorScheme = dark ? "dark" : "light";
+      })();
+    </script>
     <title>Junriel Pajal | Automation Specialist | CRM, Funnels & Workflow Automation</title>
     <meta name="description" content="I build systems that run your business on autopilot. Custom CRM setups, sales funnels, and workflow automations using GoHighLevel, Zapier, and n8n." />
     <meta name="author" content="Junriel Pajal" />

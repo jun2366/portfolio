@@ -2,6 +2,10 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
+  // Every hover: utility only applies on devices that can hover, so taps never leave stuck hover states.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -27,11 +31,17 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          solid: "hsl(var(--primary-solid))",
+          "solid-foreground": "hsl(var(--primary-solid-foreground))",
+          "solid-hover": "hsl(var(--primary-solid-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          hover: "hsl(var(--secondary-hover))",
         },
+        highlight: "hsl(var(--highlight))",
+        icon: "hsl(var(--icon))",
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

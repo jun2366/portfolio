@@ -86,7 +86,7 @@ const Certificates = () => {
   };
 
   return (
-    <section id="certificates" aria-labelledby="certificates-heading" className="scroll-mt-16 py-24 border-t border-border/30 bg-background relative overflow-hidden">
+    <section id="certificates" aria-labelledby="certificates-heading" className="scroll-mt-16 py-24 border-t border-border/30 relative overflow-hidden">
       {/* Background Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -165,7 +165,7 @@ const Certificates = () => {
         >
           {/* Close button */}
           <button
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-secondary/80 text-foreground hover:text-primary border border-border/80 hover:border-primary/30 transition-all duration-200 cursor-pointer active:scale-95"
+            className="btn btn-icon absolute top-4 right-4 sm:top-6 sm:right-6 rounded-full border border-border"
             onClick={(e) => {
               e.stopPropagation();
               setActiveIndex(null);
@@ -177,7 +177,7 @@ const Certificates = () => {
 
           {/* Left Navigation Arrow */}
           <button
-            className="absolute left-4 sm:left-8 p-3 rounded-full bg-secondary/80 text-foreground hover:text-primary border border-border/80 hover:border-primary/30 transition-all duration-200 cursor-pointer active:scale-95"
+            className="btn btn-icon absolute left-4 sm:left-8 h-12 w-12 md:h-12 md:w-12 rounded-full border border-border"
             onClick={(e) => {
               e.stopPropagation();
               handlePrev();
@@ -217,7 +217,7 @@ const Certificates = () => {
 
           {/* Right Navigation Arrow */}
           <button
-            className="absolute right-4 sm:right-8 p-3 rounded-full bg-secondary/80 text-foreground hover:text-primary border border-border/80 hover:border-primary/30 transition-all duration-200 cursor-pointer active:scale-95"
+            className="btn btn-icon absolute right-4 sm:right-8 h-12 w-12 md:h-12 md:w-12 rounded-full border border-border"
             onClick={(e) => {
               e.stopPropagation();
               handleNext();

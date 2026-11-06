@@ -4,6 +4,8 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import SectionHeader from "@/components/SectionHeader";
 import CaseStudyDialog from "@/components/CaseStudyDialog";
 import { projects, type Project } from "@/data/projects";
+import { CHIP_CLASS, projectCategory } from "@/lib/categories";
+import { cn } from "@/lib/utils";
 
 const categories = [
   "All",
@@ -62,11 +64,10 @@ const PreviousWorks = () => {
               type="button"
               aria-pressed={activeCategory === cat}
               onClick={() => setActiveCategory(cat)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
-                activeCategory === cat
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-secondary text-foreground hover:border-primary/40"
-              }`}
+              className={cn(
+                "btn min-h-11 rounded-full px-4 py-2 text-sm font-medium md:min-h-0",
+                activeCategory === cat ? "btn-solid" : "btn-secondary",
+              )}
             >
               {cat}
             </button>
@@ -74,7 +75,9 @@ const PreviousWorks = () => {
         </div>
 
         <div ref={cardsRef} className="grid gap-6 lg:grid-cols-2 reveal-stagger">
-          {filteredProjects.map((project) => (
+          {filteredProjects.map((project) => {
+            const chip = CHIP_CLASS[projectCategory(project.tags)];
+            return (
             <article
               key={project.title}
               className="surface-card group relative flex flex-col overflow-hidden hover:border-primary/30"
@@ -91,14 +94,16 @@ const PreviousWorks = () => {
               )}
 
               <div className="flex flex-1 flex-col p-6">
-                <p className="mb-2 font-mono text-xs uppercase tracking-wider text-primary">{project.category}</p>
+                <p className={cn("mb-3 self-start rounded-full px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider", chip)}>
+                  {project.category}
+                </p>
                 <h3 className="mb-3 text-lg font-bold">
                   {/* Stretched button: the whole card is clickable, but only this one control is in the tab order. */}
                   <button
                     type="button"
                     aria-haspopup="dialog"
                     onClick={() => openCaseStudy(project)}
-                    className="text-left after:absolute after:inset-0 after:rounded-xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                    className="text-left transition-colors duration-200 ease-out after:absolute after:inset-0 after:rounded-xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ring"
                   >
                     {project.title}
                   </button>
@@ -107,7 +112,7 @@ const PreviousWorks = () => {
 
                 <ul className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4" aria-label="Tools">
                   {project.tags.map((tag) => (
-                    <li key={tag} className="rounded-md bg-primary/10 px-2.5 py-1 font-mono text-xs text-primary">
+                    <li key={tag} className={cn("rounded-md px-2.5 py-1 font-mono text-xs", chip)}>
                       {tag}
                     </li>
                   ))}
@@ -123,7 +128,7 @@ const PreviousWorks = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative z-10 inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                      className="link-text relative z-10 inline-flex min-h-11 items-center gap-1.5 px-1 font-mono text-xs md:min-h-0"
                     >
                       View Project
                       <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -133,7 +138,8 @@ const PreviousWorks = () => {
                 </div>
               </div>
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
 

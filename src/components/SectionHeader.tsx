@@ -31,7 +31,7 @@ const SectionHeader = ({ label, title, highlight, subtitle, id, className }: Sec
 
   return (
     <div ref={revealRef} className={cn("reveal mx-auto mb-12 max-w-2xl text-center md:mb-16", className)}>
-      <span className="mb-4 inline-block rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-widest text-primary">
+      <span className="mb-4 inline-block rounded-full border border-highlight/25 bg-highlight/10 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-widest text-highlight">
         {label}
       </span>
       <h2 id={id} className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">

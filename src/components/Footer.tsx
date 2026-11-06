@@ -6,9 +6,9 @@ const Footer = () => {
           © 2026 Junriel Pajal. All rights reserved.
         </p>
         <div className="flex items-center gap-6">
-          <a href="#services" className="text-xs text-text-tertiary hover:text-text-secondary transition-colors">Services</a>
-          <a href="#work" className="text-xs text-text-tertiary hover:text-text-secondary transition-colors">Work</a>
-          <a href="#contact" className="text-xs text-text-tertiary hover:text-text-secondary transition-colors">Contact</a>
+          <a href="#services" className="tap inline-flex min-h-11 items-center rounded text-xs text-text-tertiary hover:text-foreground md:min-h-0">Services</a>
+          <a href="#work" className="tap inline-flex min-h-11 items-center rounded text-xs text-text-tertiary hover:text-foreground md:min-h-0">Work</a>
+          <a href="#contact" className="tap inline-flex min-h-11 items-center rounded text-xs text-text-tertiary hover:text-foreground md:min-h-0">Contact</a>
         </div>
       </div>
     </footer>

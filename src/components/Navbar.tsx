@@ -100,15 +100,15 @@ const Navbar = () => {
     <button
       type="button"
       onClick={toggleTheme}
-      className="rounded-lg p-2 text-text-secondary hover:bg-surface hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="btn btn-icon"
       aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
     >
       {theme === "dark" ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
     </button>
   );
 
-  const bookCallClass =
-    "rounded-lg bg-primary font-semibold text-primary-foreground hover:bg-primary/90 active:scale-[0.97] transition-transform focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  // The only gradient button on the site.
+  const bookCallClass = "btn btn-cta";
 
   return (
     <nav aria-label="Main" className="fixed left-0 right-0 top-0 z-50">
@@ -134,7 +134,7 @@ const Navbar = () => {
                 onClick={(e) => handleNavClick(e, link.href)}
                 aria-current={isActive ? "location" : undefined}
                 className={cn(
-                  "group relative py-1 text-sm font-medium focus:outline-none focus-visible:rounded focus-visible:ring-2 focus-visible:ring-ring",
+                  "tap group relative rounded py-1 text-sm font-medium transition-colors duration-200 ease-out",
                   isActive ? "text-primary" : "text-text-secondary hover:text-foreground",
                 )}
               >
@@ -150,19 +150,19 @@ const Navbar = () => {
             );
           })}
           {themeButton}
-          <a href={calendlyUrl} onClick={handleBookCallClick} className={cn(bookCallClass, "px-4 py-2 text-sm")}>
+          <a href={calendlyUrl} onClick={handleBookCallClick} className={cn(bookCallClass, "h-10 px-4 text-sm")}>
             Book a Call
           </a>
         </div>
 
         <div className="ml-auto flex items-center gap-1.5 md:hidden">
           {themeButton}
-          <a href={calendlyUrl} onClick={handleBookCallClick} className={cn(bookCallClass, "whitespace-nowrap px-3 py-2 text-sm")}>
+          <a href={calendlyUrl} onClick={handleBookCallClick} className={cn(bookCallClass, "h-11 px-3 text-sm")}>
             Book a Call
           </a>
           <button
             type="button"
-            className="rounded-lg p-2 text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="btn btn-icon"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -185,7 +185,7 @@ const Navbar = () => {
                   onClick={(e) => handleNavClick(e, link.href)}
                   aria-current={isActive ? "location" : undefined}
                   className={cn(
-                    "rounded-lg px-3 py-3 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    "tap flex min-h-11 items-center rounded-lg px-3 py-3 text-sm font-medium",
                     isActive ? "bg-primary/10 text-primary" : "text-text-secondary hover:text-foreground",
                   )}
                 >

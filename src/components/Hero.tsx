@@ -17,7 +17,7 @@ const Hero = () => {
   };
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background transition-colors duration-300">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
 

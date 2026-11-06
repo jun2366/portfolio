@@ -5,150 +5,157 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Dark mode (default) */
-    --background: 220 20% 6%;
-    --foreground: 210 20% 92%;
+  /*
+    Palette: sky blue (primary) and pink (sparing accent). Every token has a dark and a light value.
+    Hex values are noted next to each HSL triplet. Change colors here only.
+  */
+  :root,
+  .dark {
+    /* ---- Dark page background (kept together so it is easy to revert) ---- */
+    --background: 221 39.3% 11%; /* #111827, solid fallback and section masks */
+    --bg-gradient-from: 221 39.3% 11%; /* #111827 */
+    --bg-gradient-via: 218 33.6% 13.9%; /* midpoint */
+    --bg-gradient-to: 215 27.9% 16.9%; /* #1f2937 */
+    /* ---------------------------------------------------------------------- */
 
-    --card: 220 18% 10%;
-    --card-foreground: 210 20% 92%;
+    --foreground: 220 14.3% 95.9%; /* #f3f4f6 */
+    --card: 215 27.9% 16.9%; /* #1f2937 */
+    --card-foreground: 220 14.3% 95.9%;
+    --popover: 215 27.9% 16.9%;
+    --popover-foreground: 220 14.3% 95.9%;
 
-    --popover: 220 18% 10%;
-    --popover-foreground: 210 20% 92%;
+    /* Links, active states, focus ring, tints and icons */
+    --primary: 199 95.5% 73.9%; /* #7dd3fc */
+    --primary-foreground: 220 48.8% 8.4%; /* #0b1220 */
+    /* Solid buttons (form submit, active filter) */
+    --primary-solid: 198 93.2% 59.6%; /* #38bdf8 */
+    --primary-solid-foreground: 220 48.8% 8.4%; /* #0b1220 */
+    --primary-solid-hover: 199 88.7% 48.4%; /* #0ea5e9 */
 
-    --primary: 172 66% 50%;
-    --primary-foreground: 220 20% 4%;
+    --secondary: 217 32.6% 17.5%; /* #1e293b */
+    --secondary-foreground: 210 40% 96.1%; /* #f1f5f9 */
+    --secondary-hover: 215 30.4% 22%; /* #273549 */
+    --icon: 213 26.8% 83.9%; /* #cbd5e1 */
 
-    --secondary: 220 16% 16%;
-    --secondary-foreground: 210 20% 85%;
+    --muted: 215 27.9% 16.9%; /* #1f2937 */
+    --muted-foreground: 218 10.6% 64.9%; /* #9ca3af */
 
-    --muted: 220 14% 14%;
-    --muted-foreground: 215 12% 50%;
-
-    --accent: 172 66% 50%;
-    --accent-foreground: 220 20% 4%;
+    /* shadcn "accent" is a neutral hover surface; pink lives in --highlight */
+    --accent: 217 32.6% 17.5%;
+    --accent-foreground: 210 40% 96.1%;
+    /* Pink: small badges and highlights only */
+    --highlight: 327 87.1% 81.8%; /* #f9a8d4 */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 172 66% 50%;
+    --border: 217 19.1% 26.7%; /* #374151 */
+    --input: 216 14.7% 49.2%; /* #6b7a90, form field borders: 3.35:1 on the input fill */
+    --ring: 199 95.5% 73.9%; /* #7dd3fc */
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 172 66% 50%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 16% 14%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 220 14% 18%;
-    --sidebar-ring: 172 66% 50%;
+    --sidebar-background: 215 27.9% 16.9%;
+    --sidebar-foreground: 220 14.3% 95.9%;
+    --sidebar-primary: 199 95.5% 73.9%;
+    --sidebar-primary-foreground: 220 48.8% 8.4%;
+    --sidebar-accent: 217 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 96.1%;
+    --sidebar-border: 217 19.1% 26.7%;
+    --sidebar-ring: 199 95.5% 73.9%;
 
-    /* Custom tokens */
-    --glow: 172 66% 50%;
-    --surface: 220 16% 12%;
-    --surface-hover: 220 16% 16%;
-    --text-secondary: 215 12% 62%;
-    --text-tertiary: 215 10% 56%;
-    --gradient-start: 172 66% 50%;
-    --gradient-end: 190 80% 42%;
-  }
+    --glow: 198 93.2% 59.6%; /* #38bdf8 */
+    --surface: 217 32.6% 17.5%; /* #1e293b, inputs and inset panels */
+    --surface-hover: 215 30.4% 22%; /* #273549 */
+    --text-secondary: 218 10.6% 64.9%; /* #9ca3af */
+    --text-tertiary: 215 20.2% 65.1%; /* #94a3b8 */
+    --gradient-start: 199 95.5% 73.9%; /* #7dd3fc */
+    --gradient-end: 327 87.1% 81.8%; /* #f9a8d4 */
 
-  .dark {
-    --background: 220 20% 6%;
-    --foreground: 210 20% 92%;
+    /* Book a Call, the only gradient button (same in both modes) */
+    --cta-from: 201 96.3% 32.2%; /* #0369a1 */
+    --cta-via: 272 71.7% 47.1%; /* #7e22ce */
+    --cta-to: 335 77.6% 42%; /* #be185d */
+    --cta-foreground: 0 0% 100%;
 
-    --card: 220 18% 10%;
-    --card-foreground: 210 20% 92%;
-
-    --popover: 220 18% 10%;
-    --popover-foreground: 210 20% 92%;
-
-    --primary: 172 66% 50%;
-    --primary-foreground: 220 20% 4%;
-
-    --secondary: 220 16% 16%;
-    --secondary-foreground: 210 20% 85%;
-
-    --muted: 220 14% 14%;
-    --muted-foreground: 215 12% 50%;
-
-    --accent: 172 66% 50%;
-    --accent-foreground: 220 20% 4%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 172 66% 50%;
-
-    --sidebar-background: 220 18% 8%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 172 66% 50%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 16% 14%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 220 14% 18%;
-    --sidebar-ring: 172 66% 50%;
-
-    --glow: 172 66% 50%;
-    --surface: 220 16% 12%;
-    --surface-hover: 220 16% 16%;
-    --text-secondary: 215 12% 62%;
-    --text-tertiary: 215 10% 56%;
-    --gradient-start: 172 66% 50%;
-    --gradient-end: 190 80% 42%;
+    /* Category chips and project tags (own choices, not brand colors) */
+    --cat-web-bg: 204 80.2% 15.9%; /* #082f49 */
+    --cat-web-fg: 199 95.5% 73.9%; /* #7dd3fc */
+    --cat-n8n-bg: 336 83.9% 17.1%; /* #500724 */
+    --cat-n8n-fg: 327 87.1% 81.8%; /* #f9a8d4 */
+    --cat-zapier-bg: 21 91.7% 14.1%; /* #451a03 */
+    --cat-zapier-fg: 46 96.7% 64.5%; /* #fcd34d */
+    --cat-ghl-bg: 166 91.3% 9%; /* #022c22 */
+    --cat-ghl-fg: 156 71.6% 66.9%; /* #6ee7b7 */
   }
 
   html:not(.dark) {
-    /* Light mode. Teal is darkened from 45% to 27% lightness so teal text and white-on-teal buttons reach 4.5:1. */
-    --background: 0 0% 100%;
-    --foreground: 220 20% 12%;
+    --background: 210 20% 98%; /* #f9fafb */
+    --bg-gradient-from: 210 20% 98%; /* #f9fafb */
+    --bg-gradient-via: 204 100% 97.1%; /* #f0f9ff, faint blue */
+    --bg-gradient-to: 250 100% 97.6%; /* #f5f3ff */
 
-    --card: 0 0% 98%;
-    --card-foreground: 220 20% 12%;
+    --foreground: 221 39.3% 11%; /* #111827 */
+    --card: 0 0% 100%; /* #ffffff */
+    --card-foreground: 221 39.3% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 221 39.3% 11%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 220 20% 12%;
-
-    --primary: 172 66% 27%;
+    --primary: 201 96.3% 32.2%; /* #0369a1 */
     --primary-foreground: 0 0% 100%;
+    --primary-solid: 201 96.3% 32.2%; /* #0369a1 */
+    --primary-solid-foreground: 0 0% 100%;
+    --primary-solid-hover: 201 90% 27.5%; /* #075985 */
 
-    --secondary: 220 16% 92%;
-    --secondary-foreground: 220 20% 20%;
+    --secondary: 210 40% 96.1%; /* #f1f5f9 */
+    --secondary-foreground: 222 47.4% 11.2%; /* #0f172a */
+    --secondary-hover: 214 31.8% 91.4%; /* #e2e8f0 */
+    --icon: 215 19.3% 34.5%; /* #475569 */
 
-    --muted: 220 14% 88%;
-    --muted-foreground: 215 12% 45%;
+    --muted: 220 14.3% 95.9%; /* #f3f4f6 */
+    --muted-foreground: 215 13.8% 34.1%; /* #4b5563 */
 
-    --accent: 172 66% 27%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222 47.4% 11.2%;
+    --highlight: 335 77.6% 42%; /* #be185d */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 14% 90%;
-    --input: 220 14% 92%;
-    --ring: 172 66% 27%;
+    --border: 220 13% 91%; /* #e5e7eb */
+    --input: 218 10.1% 53.3%; /* #7c8594, form field borders: 3.38:1 on the input fill */
+    --ring: 201 96.3% 32.2%; /* #0369a1 */
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 20% 20%;
-    --sidebar-primary: 172 66% 27%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 221 39.3% 11%;
+    --sidebar-primary: 201 96.3% 32.2%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 16% 92%;
-    --sidebar-accent-foreground: 220 20% 20%;
-    --sidebar-border: 220 14% 90%;
-    --sidebar-ring: 172 66% 27%;
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222 47.4% 11.2%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 201 96.3% 32.2%;
 
-    --glow: 172 66% 45%;
-    --surface: 220 16% 95%;
-    --surface-hover: 220 16% 92%;
-    --text-secondary: 215 12% 40%;
-    --text-tertiary: 215 10% 44%;
-    --gradient-start: 172 66% 34%;
-    --gradient-end: 190 80% 38%;
+    --glow: 201 96.3% 32.2%; /* #0369a1 */
+    --surface: 220 14.3% 95.9%; /* #f3f4f6 */
+    --surface-hover: 220 13% 91%; /* #e5e7eb */
+    --text-secondary: 215 13.8% 34.1%; /* #4b5563 */
+    --text-tertiary: 217 11.2% 40.2%; /* #5b6472 (gray-500 #6b7280 fails 4.5:1 on #f3f4f6) */
+    --gradient-start: 201 96.3% 32.2%; /* #0369a1 */
+    --gradient-end: 335 77.6% 42%; /* #be185d */
+
+    --cta-from: 201 96.3% 32.2%;
+    --cta-via: 272 71.7% 47.1%;
+    --cta-to: 335 77.6% 42%;
+    --cta-foreground: 0 0% 100%;
+
+    --cat-web-bg: 204 93.8% 93.7%; /* #e0f2fe */
+    --cat-web-fg: 201 90% 27.5%; /* #075985 */
+    --cat-n8n-bg: 326 77.8% 94.7%; /* #fce7f3 */
+    --cat-n8n-fg: 336 74.4% 35.3%; /* #9d174d */
+    --cat-zapier-bg: 48 96.5% 88.8%; /* #fef3c7 */
+    --cat-zapier-fg: 23 82.5% 31.4%; /* #92400e */
+    --cat-ghl-bg: 149 80.4% 90%; /* #d1fae5 */
+    --cat-ghl-fg: 163 88.1% 19.8%; /* #065f46 */
   }
 }
 
@@ -159,15 +166,152 @@
 
   html {
     scroll-behavior: smooth;
+    /* Solid fallback under the fixed gradient; also what overscroll shows. */
+    background-color: hsl(var(--background));
+    color-scheme: light;
+  }
+  html.dark {
+    /* Native scrollbars and form controls follow the theme. */
+    color-scheme: dark;
   }
 
   body {
-    @apply bg-black text-foreground font-sans antialiased;
+    @apply text-foreground font-sans antialiased;
+    background: transparent;
+  }
+  /* Page gradient on a fixed layer, so it does not repaint or stretch while scrolling. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--bg-gradient-from)),
+      hsl(var(--bg-gradient-via)) 50%,
+      hsl(var(--bg-gradient-to))
+    );
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
+}
+
+/*
+  Shared interactive styles. Hover effects live inside @media (hover: hover) so touch devices never
+  get stuck hover states. Focus uses the ring token (2px, offset 2px). Disabled: 50% opacity, no hover.
+*/
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition-property: transform, background-color, border-color, color, box-shadow;
+    transition-duration: 180ms;
+    transition-timing-function: ease-out;
+  }
+  .btn:focus-visible,
+  .link-text:focus-visible,
+  .tap:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  .btn:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: scale(0.97);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  /* Book a Call only */
+  .btn-cta {
+    color: hsl(var(--cta-foreground));
+    background-image: linear-gradient(135deg, hsl(var(--cta-from)), hsl(var(--cta-via)) 55%, hsl(var(--cta-to)));
+    box-shadow: 0 8px 22px -12px hsl(var(--cta-via) / 0.6);
+  }
+  .btn-solid {
+    color: hsl(var(--primary-solid-foreground));
+    background-color: hsl(var(--primary-solid));
+  }
+  .btn-secondary {
+    color: hsl(var(--secondary-foreground));
+    background-color: hsl(var(--secondary));
+  }
+  .btn-outline {
+    color: hsl(var(--primary));
+    background-color: transparent;
+    border: 1.5px solid hsl(var(--primary));
+  }
+  /* Icon buttons and social icons. 44px tap target on phones. */
+  .btn-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: hsl(var(--icon));
+    background-color: hsl(var(--secondary));
+  }
+  @media (min-width: 768px) {
+    .btn-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  .link-text {
+    color: hsl(var(--primary));
+    border-radius: 0.25rem;
+    text-underline-offset: 4px;
+    transition: color 180ms ease-out;
+  }
+
+  @media (hover: hover) {
+    .btn:hover:not(:disabled):not([aria-disabled="true"]) {
+      transform: translateY(-1px);
+    }
+    .btn-cta:hover:not(:disabled) {
+      box-shadow:
+        0 14px 30px -10px hsl(var(--cta-via) / 0.65),
+        0 0 26px -6px hsl(var(--cta-to) / 0.55);
+    }
+    .btn-solid:hover:not(:disabled) {
+      background-color: hsl(var(--primary-solid-hover));
+    }
+    .btn-secondary:hover:not(:disabled),
+    .btn-icon:hover:not(:disabled) {
+      background-color: hsl(var(--secondary-hover));
+    }
+    .btn-outline:hover:not(:disabled) {
+      background-color: hsl(var(--primary) / 0.1);
+    }
+    .link-text:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn:hover,
+    .btn:active {
+      transform: none !important;
+    }
+  }
+
+  /* Category chips and project tags */
+  .chip-web { color: hsl(var(--cat-web-fg)); background-color: hsl(var(--cat-web-bg)); }
+  .chip-n8n { color: hsl(var(--cat-n8n-fg)); background-color: hsl(var(--cat-n8n-bg)); }
+  .chip-zapier { color: hsl(var(--cat-zapier-fg)); background-color: hsl(var(--cat-zapier-bg)); }
+  .chip-ghl { color: hsl(var(--cat-ghl-fg)); background-color: hsl(var(--cat-ghl-bg)); }
 }
 
 @layer utilities {
@@ -237,7 +381,7 @@
   .reveal-stagger.revealed > *:nth-child(4) { transition-delay: 240ms; }
   .reveal-stagger.revealed > *:nth-child(5) { transition-delay: 320ms; }
 
-  /* Hero portrait: circular frame with a teal gradient ring (existing gradient tokens only) */
+  /* Hero portrait: circular frame with a sky to pink gradient ring (theme tokens) */
   .portrait-photo {
     /* Source is 1024x1024. Scaling 1.15 from the top shows roughly y 0 to 890 px: hair near the top
        with a little headroom, face slightly above center, suit fading out at the bottom. */
@@ -309,8 +453,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Hero typing role: existing teal to teal-cyan gradient with a faint glow.
-   Light mode uses darker stops of the same two hues so the gradient text stays above 4.5:1 on white. */
+/* Hero typing role: sky to pink gradient (theme tokens) with a faint glow. */
 .role-gradient {
   background-image: linear-gradient(90deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)));
   -webkit-background-clip: text;
@@ -320,8 +463,7 @@
   filter: drop-shadow(0 0 10px hsl(var(--glow) / 0.14));
 }
 html:not(.dark) .role-gradient {
-  background-image: linear-gradient(90deg, hsl(172 66% 27%), hsl(190 80% 30%));
-  filter: drop-shadow(0 0 8px hsl(var(--glow) / 0.12));
+  filter: drop-shadow(0 0 8px hsl(var(--glow) / 0.1));
 }
 .typing-cursor {
   display: inline-block;

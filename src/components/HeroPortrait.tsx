@@ -77,7 +77,7 @@ const HeroPortrait = ({ areaRef }: HeroPortraitProps) => {
               <div className="w-max -translate-x-1/2 -translate-y-1/2">
                 <div data-tilt-depth={chip.depth}>
                   <div className="flex items-center gap-1 whitespace-nowrap rounded-full border border-primary/45 bg-card/85 px-2 py-0.5 font-mono text-[10px] font-medium text-foreground shadow-md shadow-black/10 md:gap-1.5 md:px-2.5 md:py-1 md:text-xs">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-highlight" />
                     {chip.label}
                   </div>
                 </div>
