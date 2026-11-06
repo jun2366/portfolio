@@ -237,16 +237,20 @@
   .reveal-stagger.revealed > *:nth-child(4) { transition-delay: 240ms; }
   .reveal-stagger.revealed > *:nth-child(5) { transition-delay: 320ms; }
 
-  /* Hero portrait: arch frame (semicircle top, softly rounded bottom) */
-  .portrait-arch {
-    border-radius: 50% 50% 1.5rem 1.5rem / 50% 50% 1.5rem 1.5rem;
+  /* Hero portrait: circular frame with a teal gradient ring (existing gradient tokens only) */
+  .portrait-photo {
+    /* Source is 1024x1024. Scaling 1.15 from the top shows roughly y 0 to 890 px: hair near the top
+       with a little headroom, face slightly above center, suit fading out at the bottom. */
+    object-position: 50% 0%;
+    transform: scale(1.15);
+    transform-origin: 50% 0%;
   }
   .portrait-border {
     background-image: linear-gradient(
       160deg,
       hsl(var(--gradient-start)),
       hsl(var(--gradient-end) / 0.55) 50%,
-      hsl(var(--gradient-start) / 0.2)
+      hsl(var(--gradient-start) / 0.9)
     );
     box-shadow: 0 20px 40px -20px hsl(var(--glow) / 0.35);
   }
@@ -261,24 +265,81 @@
   }
 }
 
-/* Idle float: phones only for the portrait, everywhere for the chips. Off with reduced motion. */
-@media (hover: none) and (prefers-reduced-motion: no-preference) {
-  .portrait-float {
-    animation: portrait-float 6s ease-in-out infinite;
+/* Tool chips orbiting the portrait. Desktop: just outside the 150px ring. Phones: 100px so the widest
+   chip plus its tilt shift stays inside a 320px screen (the chips straddle the 110px ring there). */
+.orbit-ring {
+  --orbit-r: 100px;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .orbit-ring {
+    --orbit-r: 178px;
   }
+}
+.orbit-arm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(var(--orbit-angle)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--orbit-angle)));
+}
+.orbit-counter {
+  width: 0;
+  height: 0;
+}
+/* Reduced motion: no rotation, chips stay at their evenly spaced start angles. */
+@media (prefers-reduced-motion: no-preference) {
+  .orbit-ring {
+    animation: orbit-spin 24s linear infinite;
+  }
+  .orbit-counter {
+    animation: orbit-spin 24s linear infinite reverse;
+  }
+}
+.orbit-paused,
+.orbit-paused .orbit-counter {
+  animation-play-state: paused;
+}
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hero typing role: existing teal to teal-cyan gradient with a faint glow.
+   Light mode uses darker stops of the same two hues so the gradient text stays above 4.5:1 on white. */
+.role-gradient {
+  background-image: linear-gradient(90deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Glow capped so even directly behind the glyphs the text stays above 4.5:1. */
+  filter: drop-shadow(0 0 10px hsl(var(--glow) / 0.14));
+}
+html:not(.dark) .role-gradient {
+  background-image: linear-gradient(90deg, hsl(172 66% 27%), hsl(190 80% 30%));
+  filter: drop-shadow(0 0 8px hsl(var(--glow) / 0.12));
+}
+.typing-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  border-radius: 1px;
+  background: hsl(var(--primary));
 }
 @media (prefers-reduced-motion: no-preference) {
-  .chip-float {
-    animation: chip-float 5s ease-in-out infinite;
+  .typing-cursor {
+    animation: cursor-blink 1s steps(1, end) infinite;
   }
 }
-@keyframes portrait-float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -8px, 0); }
-}
-@keyframes chip-float {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(0, -5px, 0); }
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Reduced motion: show scroll-revealed content immediately and drop the modal's fade/zoom. */
