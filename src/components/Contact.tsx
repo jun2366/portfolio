@@ -3,7 +3,6 @@ import { ArrowRight, Mail, User, MessageSquare, Linkedin, ExternalLink, Phone, M
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import SectionHeader from "@/components/SectionHeader";
-import { EarthCanvas } from "@/components/Canvas";
 import resume from "../assets/jun_resume.pdf";
 
 const Contact = () => {
@@ -76,13 +75,6 @@ const Contact = () => {
 
         {/* Main Content Card Wrapper */}
         <div ref={formRef} className="max-w-5xl mx-auto reveal relative">
-          
-          {/* Floating 3D Earth */}
-          <div className="absolute bottom-0 left-0 -translate-x-[35%] translate-y-[35%] w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 z-20 pointer-events-auto">
-            {/* Halo stars and the glow behind the Earth were removed; the Earth itself is kept. */}
-            <EarthCanvas variant="inline" halo={false} className="w-full h-full" />
-          </div>
-
           {/* Premium Get in Touch Card */}
           <div className="relative bg-surface/40 dark:bg-card/40 backdrop-blur-xl border border-border/80 dark:border-border/70 rounded-2xl p-6 sm:p-10 md:p-12 shadow-2xl overflow-visible z-10">
             {submitted ? (
@@ -107,7 +99,7 @@ const Contact = () => {
               /* Contact Form & Details */
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 lg:items-stretch">
                 {/* Form Column */}
-                <div className="lg:col-span-2 flex flex-col pl-0 lg:pl-20">
+                <div className="lg:col-span-2 flex flex-col">
                   <form onSubmit={handleSubmit} className="space-y-4 flex flex-col h-full justify-between">
                     <div className="space-y-4">
                       {/* Name Input */}
@@ -164,7 +156,7 @@ const Contact = () => {
                 </div>
 
                 {/* Contact Information Column */}
-                <div className="lg:col-span-1 flex flex-col pl-16 sm:pl-20 lg:pl-8 pt-8 lg:pt-0 border-t lg:border-t-0 lg:border-l border-border/40 dark:border-border/20 justify-between gap-6">
+                <div className="lg:col-span-1 flex flex-col lg:pl-8 pt-8 lg:pt-0 border-t lg:border-t-0 lg:border-l border-border/40 dark:border-border/20 justify-between gap-6">
                   <div className="space-y-3">
                     {contactDetails.map((detail, idx) => {
                       const Icon = detail.icon;
