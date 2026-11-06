@@ -7,7 +7,7 @@ import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
 import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
 import IPCR from "@/assets/ipcr-system.png";
 import ADU from "@/assets/ADU.png";
-import PierreMiller from "@/assets/pierre-miller.png";
+import PierreMiller from "@/assets/pierre-miller.webp";
 
 export interface ProjectResult {
   /** The figure or short outcome, e.g. "5,793+". Only use real, verifiable numbers. */
