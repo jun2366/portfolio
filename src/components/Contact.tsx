@@ -7,12 +7,47 @@ import resume from "../assets/jun_resume.pdf";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const formRef = useScrollReveal();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    if (submitting) return;
+    setSubmitting(true);
+    setError(false);
+
+    const body = new URLSearchParams({
+      "form-name": "contact",
+      name,
+      email,
+      message,
+      "bot-field": honeypot,
+    }).toString();
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+      if (!response.ok) throw new Error("Request failed");
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setHoneypot("");
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch {
+      setError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactDetails = [
@@ -100,7 +135,24 @@ const Contact = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 lg:items-stretch">
                 {/* Form Column */}
                 <div className="lg:col-span-2 flex flex-col">
-                  <form onSubmit={handleSubmit} className="space-y-4 flex flex-col h-full justify-between">
+                  <form name="contact" onSubmit={handleSubmit} className="space-y-4 flex flex-col h-full justify-between">
+                    <input type="hidden" name="form-name" value="contact" />
+
+                    {/* Honeypot: hidden from people and assistive tech; bots that fill it are dropped by Netlify */}
+                    <div className="sr-only" aria-hidden="true">
+                      <label>
+                        Leave this field empty
+                        <input
+                          type="text"
+                          name="bot-field"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          value={honeypot}
+                          onChange={(e) => setHoneypot(e.target.value)}
+                        />
+                      </label>
+                    </div>
+
                     <div className="space-y-4">
                       {/* Name Input */}
                       <div className="space-y-1.5">
@@ -110,6 +162,9 @@ const Contact = () => {
                           <input
                             required
                             type="text"
+                            name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             placeholder="Your name"
                             className="w-full h-12 pl-12 pr-4 rounded-lg bg-surface border border-input text-foreground placeholder:text-text-tertiary transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
                           />
@@ -124,6 +179,9 @@ const Contact = () => {
                           <input
                             required
                             type="email"
+                            name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@company.com"
                             className="w-full h-12 pl-12 pr-4 rounded-lg bg-surface border border-input text-foreground placeholder:text-text-tertiary transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
                           />
@@ -138,6 +196,9 @@ const Contact = () => {
                           <textarea
                             required
                             rows={4}
+                            name="message"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                             placeholder="Tell me about your business and what you'd like to automate..."
                             className="w-full pl-12 pr-4 py-3 rounded-lg bg-surface border border-input text-foreground placeholder:text-text-tertiary transition-colors duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background resize-none"
                           />
@@ -145,11 +206,31 @@ const Contact = () => {
                       </div>
                     </div>
 
+                    {/* Error Message */}
+                    {error && (
+                      <p
+                        role="alert"
+                        className="text-sm font-medium rounded-lg border border-red-700/40 bg-red-50 px-4 py-3 text-red-700 dark:border-red-300/40 dark:bg-red-950/40 dark:text-red-300"
+                      >
+                        Something went wrong. Please try again or email me at{" "}
+                        <a href="mailto:junrielpajal8@gmail.com" className="underline underline-offset-2">
+                          junrielpajal8@gmail.com
+                        </a>
+                      </p>
+                    )}
+
                     {/* Submit Button */}
                     <div className="flex justify-end mt-4">
-                      <Button type="submit" variant="default" size="lg" className="w-full sm:w-auto px-8 group">
-                        Send Message
-                        <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      <Button
+                        type="submit"
+                        variant="default"
+                        size="lg"
+                        disabled={submitting}
+                        aria-busy={submitting}
+                        className="w-full sm:w-auto px-8 group"
+                      >
+                        {submitting ? "Sending..." : "Send Message"}
+                        <ArrowRight className="ml-2 w-4 h-4 transition-transform motion-reduce:transition-none group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0" />
                       </Button>
                     </div>
                   </form>

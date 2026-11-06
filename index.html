@@ -31,6 +31,13 @@
   </head>
 
   <body>
+    <!-- Static copy of the Contact form so Netlify Forms can detect it at build time. Field names must match src/components/Contact.tsx. -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/main.tsx"></script>
   </body>
