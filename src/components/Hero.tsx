@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { useRef } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import profileImg from "@/assets/profile.jpg";
-import FacePixels from "@/components/FacePixels";
-import type { FaceCrop } from "@/lib/face-pixels";
-
-// Head-and-shoulders square from the 1024×1024 photo; the negative y adds headroom above the hair.
-const PROFILE_CROP: FaceCrop = { x: 165 / 1024, y: -24 / 1024, w: 700 / 1024, h: 700 / 1024 };
+import HeroPortrait from "@/components/HeroPortrait";
 
 const Hero = () => {
   const revealRef = useScrollReveal();
+  const sectionRef = useRef<HTMLElement>(null);
 
   const handleScrollTo = (href: string) => {
     const target = document.querySelector(href);
@@ -17,7 +14,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background transition-colors duration-300">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background transition-colors duration-300">
       <div className="absolute inset-0 grid-bg opacity-30" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] animate-pulse-glow" />
 
@@ -25,9 +22,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Profile Picture & Identity */}
           <div className="mb-10 flex flex-col items-center gap-4 animate-fade-in">
-            <div className="w-[220px] md:w-[300px] aspect-square">
-              <FacePixels src={profileImg} alt="Photo of Junriel T. Pajal" crop={PROFILE_CROP} mobileColumns={48} />
-            </div>
+            <HeroPortrait areaRef={sectionRef} />
             <div>
               <h2 className="text-xl md:text-2xl font-bold tracking-tight">Junriel Pajal</h2>
               <p className="text-sm text-text-secondary font-mono mt-1">Automation Specialist</p>
@@ -44,7 +39,7 @@ const Hero = () => {
             Custom CRM setups, sales funnels, and workflow automations using{" "}
             <span className="text-foreground font-medium">GoHighLevel</span>,{" "}
             <span className="text-foreground font-medium">Zapier</span>, and{" "}
-            <span className="text-foreground font-medium">n8n</span> — so you can focus on growth, not grunt work.
+            <span className="text-foreground font-medium">n8n</span>, so you can focus on growth, not grunt work.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

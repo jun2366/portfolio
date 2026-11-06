@@ -236,4 +236,47 @@
   .reveal-stagger.revealed > *:nth-child(3) { transition-delay: 160ms; }
   .reveal-stagger.revealed > *:nth-child(4) { transition-delay: 240ms; }
   .reveal-stagger.revealed > *:nth-child(5) { transition-delay: 320ms; }
+
+  /* Hero portrait: arch frame (semicircle top, softly rounded bottom) */
+  .portrait-arch {
+    border-radius: 50% 50% 1.5rem 1.5rem / 50% 50% 1.5rem 1.5rem;
+  }
+  .portrait-border {
+    background-image: linear-gradient(
+      160deg,
+      hsl(var(--gradient-start)),
+      hsl(var(--gradient-end) / 0.55) 50%,
+      hsl(var(--gradient-start) / 0.2)
+    );
+    box-shadow: 0 20px 40px -20px hsl(var(--glow) / 0.35);
+  }
+  .portrait-glow {
+    background: radial-gradient(closest-side, hsl(var(--glow) / 0.28), transparent);
+  }
+  .portrait-fade {
+    background: linear-gradient(to top, hsl(var(--surface)) 0%, hsl(var(--surface) / 0.55) 30%, transparent 100%);
+  }
+  .portrait-glare {
+    background: radial-gradient(circle at center, hsl(0 0% 100% / 0.22), transparent 45%);
+  }
+}
+
+/* Idle float: phones only for the portrait, everywhere for the chips. Off with reduced motion. */
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .portrait-float {
+    animation: portrait-float 6s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chip-float {
+    animation: chip-float 5s ease-in-out infinite;
+  }
+}
+@keyframes portrait-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+@keyframes chip-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
 }
