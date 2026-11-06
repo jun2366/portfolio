@@ -7,6 +7,7 @@ import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
 import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
 import IPCR from "@/assets/ipcr-system.png";
 import ADU from "@/assets/ADU.png";
+import PierreMiller from "@/assets/pierre-miller.png";
 
 export interface ProjectResult {
   /** The figure or short outcome, e.g. "5,793+". Only use real, verifiable numbers. */
@@ -162,6 +163,19 @@ export const projects: Project[] = [
     tags: ["JavaScript", "Tailwind CSS", "HTML 5", "UI/UX", "Marketing Website", "Web Development", "Lead Generation", "Responsive Design"],
     image: ADU,
     link: "https://www.theaduexchange.com/",
+  },
+  {
+    title: "Pierre Miller Design Studio Website",
+    category: "Web Development",
+    tagline: "Freelance web developer, AI-assisted development with Base44",
+    overview:
+      "Portfolio website for an architecture and interior design studio, with projects grouped by category and a page for each project. Built with Base44.",
+    // challenge: "[add challenge here]",
+    // solution: "[add solution here]",
+    // results: [{ value: "[add result here]", label: "[add result here]" }],
+    tags: ["Base44", "Web Development", "Portfolio Website", "AI-Assisted"],
+    image: PierreMiller,
+    link: "https://pierremillerdesign.com/projects",
   },
   /*
   {
