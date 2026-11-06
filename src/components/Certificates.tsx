@@ -160,7 +160,7 @@ const Certificates = () => {
       {/* Lightbox / Modal */}
       {activeIndex !== null && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md transition-all duration-300 p-4 sm:p-6"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-background/95 backdrop-blur-md transition-all duration-300 p-4 sm:p-6"
           onClick={() => setActiveIndex(null)}
         >
           {/* Close button */}
