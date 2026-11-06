@@ -31,7 +31,7 @@ const Contact = () => {
     {
       icon: MapPin,
       label: "Location",
-      value: "Emenville Subdivision, Ambago, Butuan City, Agusan Del Norte",
+      value: "Butuan City, Philippines",
       href: null,
     },
   ];

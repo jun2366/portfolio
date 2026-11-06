@@ -128,7 +128,7 @@ export const projects: Project[] = [
   {
     title: "Smart Lead Routing for Real Estate",
     category: "GoHighLevel Automation",
-    overview: "Intelligent lead qualification system for Single Tree Team real estate.",
+    overview: "Intelligent lead qualification system for a real estate client.",
     // challenge: "[add challenge here]",
     solution:
       "Routes survey submissions by lead type (Buyer/Seller/Both), auto-tags contacts, creates pipeline opportunities, syncs to KvCore CRM via webhook, and triggers follow-up sequences for unresponsive leads.",
