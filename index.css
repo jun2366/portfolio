@@ -83,8 +83,8 @@
     --cat-web-fg: 199 95.5% 73.9%; /* #7dd3fc */
     --cat-n8n-bg: 336 83.9% 17.1%; /* #500724 */
     --cat-n8n-fg: 327 87.1% 81.8%; /* #f9a8d4 */
-    --cat-zapier-bg: 21 91.7% 14.1%; /* #451a03 */
-    --cat-zapier-fg: 46 96.7% 64.5%; /* #fcd34d */
+    --cat-zapier-bg: 261 72.6% 22.9%; /* #2e1065, violet */
+    --cat-zapier-fg: 252 94.7% 85.1%; /* #c4b5fd, violet */
     --cat-ghl-bg: 166 91.3% 9%; /* #022c22 */
     --cat-ghl-fg: 156 71.6% 66.9%; /* #6ee7b7 */
   }
@@ -152,8 +152,8 @@
     --cat-web-fg: 201 90% 27.5%; /* #075985 */
     --cat-n8n-bg: 326 77.8% 94.7%; /* #fce7f3 */
     --cat-n8n-fg: 336 74.4% 35.3%; /* #9d174d */
-    --cat-zapier-bg: 48 96.5% 88.8%; /* #fef3c7 */
-    --cat-zapier-fg: 23 82.5% 31.4%; /* #92400e */
+    --cat-zapier-bg: 251 91.3% 95.5%; /* #ede9fe, violet */
+    --cat-zapier-fg: 263 69.3% 42.2%; /* #5b21b6, violet */
     --cat-ghl-bg: 149 80.4% 90%; /* #d1fae5 */
     --cat-ghl-fg: 163 88.1% 19.8%; /* #065f46 */
   }
