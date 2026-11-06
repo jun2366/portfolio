@@ -14,7 +14,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>() {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+      // threshold 0: reveal as soon as the element's top is 40px into the viewport.
+      // A ratio threshold (it was 0.15) can never be met by elements much taller than the
+      // screen, e.g. the 9-card Work grid on phones (~4900px tall), which then stayed invisible.
+      { threshold: 0, rootMargin: "0px 0px -40px 0px" }
     );
 
     observer.observe(el);

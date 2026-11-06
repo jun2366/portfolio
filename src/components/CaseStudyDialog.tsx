@@ -49,7 +49,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
 
             <div className="space-y-8 p-5 sm:p-8">
               <header className="space-y-3">
-                <span className={cn("inline-block rounded-full px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider", chip)}>
+                <span className={cn("inline-block rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wide", chip)}>
                   {project.category}
                 </span>
                 <DialogPrimitive.Title className="pr-10 text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
@@ -59,7 +59,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
               </header>
 
               <section aria-labelledby="case-overview" className="space-y-2">
-                <h3 id="case-overview" className="font-mono text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                <h3 id="case-overview" className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
                   Overview
                 </h3>
                 <DialogPrimitive.Description className="text-base leading-relaxed text-foreground">
@@ -71,30 +71,30 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
                 <div className={hasChallenge && hasSolution ? "grid gap-4 md:grid-cols-2" : "grid gap-4"}>
                   {hasChallenge && (
                     <section aria-labelledby="case-challenge" className="rounded-xl border border-border bg-background/60 p-5">
-                      <h3 id="case-challenge" className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                      <h3 id="case-challenge" className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-secondary">
                         Challenge
                       </h3>
-                      <p className="text-sm leading-relaxed text-foreground">{project.challenge}</p>
+                      <p className="text-[15px] leading-[1.6] text-foreground">{project.challenge}</p>
                     </section>
                   )}
                   {hasSolution && (
                     <section aria-labelledby="case-solution" className="rounded-xl border border-primary/25 bg-primary/5 p-5">
-                      <h3 id="case-solution" className="mb-2 font-mono text-xs font-semibold uppercase tracking-wider text-primary">
+                      <h3 id="case-solution" className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary">
                         Solution
                       </h3>
-                      <p className="text-sm leading-relaxed text-foreground">{project.solution}</p>
+                      <p className="text-[15px] leading-[1.6] text-foreground">{project.solution}</p>
                     </section>
                   )}
                 </div>
               )}
 
               <section aria-labelledby="case-tools" className="space-y-3">
-                <h3 id="case-tools" className="font-mono text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                <h3 id="case-tools" className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
                   Tools
                 </h3>
                 <ul className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <li key={tag} className={cn("rounded-md px-2.5 py-1 font-mono text-xs", chip)}>
+                    <li key={tag} className="rounded-md border border-border bg-secondary px-2.5 py-1 text-[13px] font-medium text-secondary-foreground">
                       {tag}
                     </li>
                   ))}
@@ -103,7 +103,7 @@ const CaseStudyDialog = ({ project, open, onOpenChange }: CaseStudyDialogProps) 
 
               {results.length > 0 && (
                 <section aria-labelledby="case-results" className="space-y-3">
-                  <h3 id="case-results" className="font-mono text-xs font-semibold uppercase tracking-wider text-text-secondary">
+                  <h3 id="case-results" className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
                     Results
                   </h3>
                   <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -337,6 +337,12 @@
     box-shadow: 0 0 30px -10px hsl(var(--glow) / 0.08);
   }
 
+  /* Fades a horizontally scrolling row out at both edges without painting a background color. */
+  .marquee-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
   .grid-bg {
     background-image: 
       linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
@@ -359,9 +365,10 @@
     transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  /* End states use transform: none (not translateY(0)) so revealed text is not left on a transformed layer. */
   .reveal.revealed {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
   /* Staggered children */
@@ -373,7 +380,7 @@
   }
   .reveal-stagger.revealed > * {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
   .reveal-stagger.revealed > *:nth-child(1) { transition-delay: 0ms; }
   .reveal-stagger.revealed > *:nth-child(2) { transition-delay: 80ms; }

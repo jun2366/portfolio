@@ -1,31 +1,61 @@
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { TOOL_ICON_PATHS, type ToolIconSlug } from "@/lib/tool-icons";
 
-const fallbackIcon =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%239CA3AF'/%3E%3Cpath d='M7 8h10v2H7zm0 4h7v2H7zm0 4h6v2H7z' fill='%23ffffff'/%3E%3C/svg%3E";
+interface Tool {
+  name: string;
+  /** Local brand mark (simple-icons, CC0). Omitted when no accurate open icon exists. */
+  icon?: ToolIconSlug;
+  /** Short neutral monogram shown when there is no icon. */
+  monogram?: string;
+}
 
-const tools = [
-  { name: "Monday.com", icon: "https://cdn.simpleicons.org/monday" },
-  { name: "Notion", icon: "https://cdn.simpleicons.org/notion/ffffff" },
-  { name: "Airtable", icon: "https://cdn.simpleicons.org/airtable" },
-  { name: "ClickUp", icon: "https://cdn.simpleicons.org/clickup" },
-  { name: "Zoom", icon: "https://cdn.simpleicons.org/zoom" },
-  { name: "Webhooks", icon: "https://cdn.simpleicons.org/webhook" },
-  { name: "HTTP Request", icon: "https://cdn.simpleicons.org/httpie" },
-  { name: "GoHighLevel", icon: "https://api.simpleicons.org/gohighlevel?color=000000" },
-  { name: "Zapier", icon: "https://cdn.simpleicons.org/zapier" },
-  { name: "n8n", icon: "https://cdn.simpleicons.org/n8n" },
-  { name: "ChatGPT", icon: "https://api.simpleicons.org/openai?color=000000" },
-  { name: "Claude", icon: "https://cdn.simpleicons.org/anthropic" },
-  { name: "Google Workspace", icon: "https://cdn.simpleicons.org/google" },
-  { name: "Google Drive", icon: "https://cdn.simpleicons.org/googledrive" },
-  { name: "Google Sheets", icon: "https://cdn.simpleicons.org/googlesheets" },
-  { name: "Calendly", icon: "https://cdn.simpleicons.org/calendly" },
-  { name: "Dropbox", icon: "https://cdn.simpleicons.org/dropbox" },
-  { name: "Slack", icon: "https://cdn.simpleicons.org/slack" },
-  { name: "Trello", icon: "https://cdn.simpleicons.org/trello" },
+const tools: Tool[] = [
+  { name: "Monday.com", monogram: "M" },
+  { name: "Notion", icon: "notion" },
+  { name: "Airtable", icon: "airtable" },
+  { name: "ClickUp", icon: "clickup" },
+  { name: "Zoom", icon: "zoom" },
+  { name: "Webhooks", monogram: "WH" },
+  { name: "HTTP Request", monogram: "HTTP" },
+  { name: "GoHighLevel", monogram: "GHL" },
+  { name: "Zapier", icon: "zapier" },
+  { name: "n8n", icon: "n8n" },
+  { name: "ChatGPT", monogram: "GPT" },
+  { name: "Claude", icon: "anthropic" },
+  { name: "Google Workspace", icon: "google" },
+  { name: "Google Drive", icon: "googledrive" },
+  { name: "Google Sheets", icon: "googlesheets" },
+  { name: "Calendly", icon: "calendly" },
+  { name: "Dropbox", icon: "dropbox" },
+  { name: "Slack", monogram: "S" },
+  { name: "Trello", icon: "trello" },
 ];
 
-const marqueeTools = [...tools, ...tools];
+/** One full set of tools. Rendered twice for the seamless loop; the copy is hidden from screen readers. */
+const ToolList = ({ hidden = false }: { hidden?: boolean }) => (
+  <ul className="flex shrink-0" aria-hidden={hidden || undefined} aria-label={hidden ? undefined : "Tools I work with"}>
+    {tools.map((tool) => (
+      <li key={tool.name} className="group/tool mx-6 flex w-20 shrink-0 flex-col items-center md:mx-8 md:w-24">
+        {/* Same tile for icons and monograms: identical size, color and baseline across the row. */}
+        <div
+          aria-hidden="true"
+          className="flex h-12 w-12 items-center justify-center rounded-xl border border-border bg-card text-icon transition-colors duration-200 ease-out group-hover/tool:border-primary/50 md:h-14 md:w-14"
+        >
+          {tool.icon ? (
+            <svg viewBox="0 0 24 24" className="h-6 w-6 md:h-7 md:w-7" fill="currentColor" focusable="false">
+              <path d={TOOL_ICON_PATHS[tool.icon]} />
+            </svg>
+          ) : (
+            <span className="text-[11px] font-bold leading-none tracking-tight md:text-xs">{tool.monogram}</span>
+          )}
+        </div>
+        <span className="mt-2 whitespace-nowrap text-center text-xs font-medium leading-tight text-text-secondary transition-colors duration-200 ease-out group-hover/tool:text-foreground">
+          {tool.name}
+        </span>
+      </li>
+    ))}
+  </ul>
+);
 
 const ToolsMarquee = () => {
   const revealRef = useScrollReveal();
@@ -41,34 +71,12 @@ const ToolsMarquee = () => {
         </h2>
       </div>
 
-      <div className="relative group">
-        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-40 z-10 bg-gradient-to-r from-background to-transparent pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-40 z-10 bg-gradient-to-l from-background to-transparent pointer-events-none" />
+      {/* Edge fade via a mask on the row itself, so it blends into the page gradient in both themes. */}
+      <div className="marquee-fade relative group">
 
         <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
-          {marqueeTools.map((tool, i) => (
-            <div
-              key={`${tool.name}-${i}`}
-              className="flex flex-col items-center justify-center mx-6 md:mx-8 w-20 md:w-24 shrink-0 transition-all duration-300 ease-in-out hover:scale-105 cursor-default group/tool"
-            >
-              <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-xl bg-secondary/50 border border-border transition-all duration-300 ease-in-out group-hover/tool:border-primary/40 group-hover/tool:shadow-[0_0_20px_-5px_hsl(var(--glow)/0.25)]">
-                <img
-                  src={tool.icon}
-                  alt={tool.name}
-                  onError={(event) => {
-                    const target = event.currentTarget;
-                    target.onerror = null;
-                    target.src = fallbackIcon;
-                  }}
-                  className="w-6 h-6 md:w-7 md:h-7 opacity-[0.85] transition-all duration-300 ease-in-out group-hover/tool:opacity-100 group-hover/tool:drop-shadow-[0_0_6px_hsl(var(--glow)/0.4)]"
-                  loading="lazy"
-                />
-              </div>
-              <span className="mt-2 text-[10px] md:text-xs font-mono text-text-tertiary transition-colors duration-300 group-hover/tool:text-foreground text-center leading-tight">
-                {tool.name}
-              </span>
-            </div>
-          ))}
+          <ToolList />
+          <ToolList hidden />
         </div>
       </div>
     </section>

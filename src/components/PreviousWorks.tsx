@@ -22,6 +22,9 @@ const categories = [
   */
 ];
 
+/** Cards show this many tags plus a "+N" chip; the case-study modal lists them all. */
+const MAX_CARD_TAGS = 3;
+
 const PreviousWorks = () => {
   const cardsRef = useScrollReveal();
   const [activeCategory, setActiveCategory] = useState<string>("All");
@@ -77,6 +80,8 @@ const PreviousWorks = () => {
         <div ref={cardsRef} className="grid gap-6 lg:grid-cols-2 reveal-stagger">
           {filteredProjects.map((project) => {
             const chip = CHIP_CLASS[projectCategory(project.tags)];
+            const shownTags = project.tags.slice(0, MAX_CARD_TAGS);
+            const hiddenCount = project.tags.length - shownTags.length;
             return (
             <article
               key={project.title}
@@ -94,7 +99,7 @@ const PreviousWorks = () => {
               )}
 
               <div className="flex flex-1 flex-col p-6">
-                <p className={cn("mb-3 self-start rounded-full px-2.5 py-1 font-mono text-xs font-semibold uppercase tracking-wider", chip)}>
+                <p className={cn("mb-3 self-start rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide", chip)}>
                   {project.category}
                 </p>
                 <h3 className="mb-3 text-lg font-bold">
@@ -106,21 +111,32 @@ const PreviousWorks = () => {
                     className="text-left transition-colors duration-200 ease-out after:absolute after:inset-0 after:rounded-xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:outline focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ring"
                   >
                     {project.title}
+                    <span className="sr-only">, view case study</span>
                   </button>
                 </h3>
-                <p className="flex-1 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
+                <p className="flex-1 text-[15px] leading-[1.6] text-text-secondary md:text-base">{project.overview}</p>
 
                 <ul className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4" aria-label="Tools">
-                  {project.tags.map((tag) => (
-                    <li key={tag} className={cn("rounded-md px-2.5 py-1 font-mono text-xs", chip)}>
+                  {shownTags.map((tag) => (
+                    <li key={tag} className="rounded-md border border-border bg-secondary px-2.5 py-1 text-[13px] font-medium text-secondary-foreground">
                       {tag}
                     </li>
                   ))}
+                  {hiddenCount > 0 && (
+                    <li className="rounded-md border border-border bg-secondary px-2.5 py-1 text-[13px] font-medium text-secondary-foreground">
+                      <span aria-hidden="true">+{hiddenCount}</span>
+                      <span className="sr-only">and {hiddenCount} more</span>
+                    </li>
+                  )}
                 </ul>
 
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground" aria-hidden="true">
-                    <Maximize2 className="h-4 w-4 text-primary" />
+                  {/* Visual cue only: the whole card is the case-study button (see the title). */}
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary group-hover:underline underline-offset-4 md:min-h-0"
+                  >
+                    <Maximize2 className="h-4 w-4" />
                     View case study
                   </span>
                   {project.link && (
@@ -128,10 +144,10 @@ const PreviousWorks = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="link-text relative z-10 inline-flex min-h-11 items-center gap-1.5 px-1 font-mono text-xs md:min-h-0"
+                      className="link-text relative z-10 inline-flex min-h-11 items-center gap-1.5 px-1 text-sm font-semibold md:min-h-0"
                     >
                       View Project
-                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                       <span className="sr-only"> for {project.title} (opens in a new tab)</span>
                     </a>
                   )}
