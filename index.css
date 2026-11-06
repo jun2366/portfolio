@@ -50,8 +50,8 @@
     --glow: 172 66% 50%;
     --surface: 220 16% 12%;
     --surface-hover: 220 16% 16%;
-    --text-secondary: 215 12% 55%;
-    --text-tertiary: 215 10% 40%;
+    --text-secondary: 215 12% 62%;
+    --text-tertiary: 215 10% 56%;
     --gradient-start: 172 66% 50%;
     --gradient-end: 190 80% 42%;
   }
@@ -97,14 +97,14 @@
     --glow: 172 66% 50%;
     --surface: 220 16% 12%;
     --surface-hover: 220 16% 16%;
-    --text-secondary: 215 12% 55%;
-    --text-tertiary: 215 10% 40%;
+    --text-secondary: 215 12% 62%;
+    --text-tertiary: 215 10% 56%;
     --gradient-start: 172 66% 50%;
     --gradient-end: 190 80% 42%;
   }
 
   html:not(.dark) {
-    /* Light mode */
+    /* Light mode. Teal is darkened from 45% to 27% lightness so teal text and white-on-teal buttons reach 4.5:1. */
     --background: 0 0% 100%;
     --foreground: 220 20% 12%;
 
@@ -114,7 +114,7 @@
     --popover: 0 0% 98%;
     --popover-foreground: 220 20% 12%;
 
-    --primary: 172 66% 45%;
+    --primary: 172 66% 27%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 16% 92%;
@@ -123,7 +123,7 @@
     --muted: 220 14% 88%;
     --muted-foreground: 215 12% 45%;
 
-    --accent: 172 66% 45%;
+    --accent: 172 66% 27%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -131,23 +131,23 @@
 
     --border: 220 14% 90%;
     --input: 220 14% 92%;
-    --ring: 172 66% 45%;
+    --ring: 172 66% 27%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 220 20% 20%;
-    --sidebar-primary: 172 66% 45%;
+    --sidebar-primary: 172 66% 27%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 16% 92%;
     --sidebar-accent-foreground: 220 20% 20%;
     --sidebar-border: 220 14% 90%;
-    --sidebar-ring: 172 66% 45%;
+    --sidebar-ring: 172 66% 27%;
 
     --glow: 172 66% 45%;
     --surface: 220 16% 95%;
     --surface-hover: 220 16% 92%;
     --text-secondary: 215 12% 40%;
-    --text-tertiary: 215 10% 55%;
-    --gradient-start: 172 66% 45%;
+    --text-tertiary: 215 10% 44%;
+    --gradient-start: 172 66% 34%;
     --gradient-end: 190 80% 38%;
   }
 }
@@ -279,4 +279,20 @@
 @keyframes chip-float {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50% { transform: translate3d(0, -5px, 0); }
+}
+
+/* Reduced motion: show scroll-revealed content immediately and drop the modal's fade/zoom. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .case-study-motion {
+    animation: none !important;
+  }
 }

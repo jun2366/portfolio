@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Maximize2, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import SectionHeader from "@/components/SectionHeader";
 
 import ghlCert from "@/assets/ghl.jpg";
 import zapierCert from "@/assets/zapier.jpg";
@@ -43,7 +44,6 @@ const certificates: Certificate[] = [
 ];
 
 const Certificates = () => {
-  const headerRef = useScrollReveal();
   const gridRef = useScrollReveal();
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -86,21 +86,19 @@ const Certificates = () => {
   };
 
   return (
-    <section id="certificates" className="py-24 border-t border-border/30 bg-background relative overflow-hidden">
+    <section id="certificates" aria-labelledby="certificates-heading" className="scroll-mt-16 py-24 border-t border-border/30 bg-background relative overflow-hidden">
       {/* Background Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container px-6 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="max-w-2xl mb-16 reveal text-center mx-auto">
-          <p className="text-primary font-mono text-sm mb-3 tracking-wider uppercase">Credentials</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Professional Certifications
-          </h2>
-          <p className="text-text-secondary text-lg">
-            Verified expertise in industry-leading automation, integration, and CRM platforms.
-          </p>
-        </div>
+        <SectionHeader
+          id="certificates-heading"
+          label="Credentials"
+          title="Professional Certifications"
+          highlight="Certifications"
+          subtitle="Verified expertise in industry-leading automation, integration, and CRM platforms."
+        />
 
         {/* Certificates Grid */}
         <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger">

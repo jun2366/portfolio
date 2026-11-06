@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, User, MessageSquare, Linkedin, ExternalLink, Phone, MapPin, FileText, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import SectionHeader from "@/components/SectionHeader";
 import { EarthCanvas } from "@/components/Canvas";
 import resume from "../assets/jun_resume.pdf";
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
-  const headerRef = useScrollReveal();
   const formRef = useScrollReveal();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -57,7 +57,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-background relative overflow-hidden transition-colors duration-300">
+    <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-16 py-20 bg-background relative overflow-hidden transition-colors duration-300">
       {/* Animated gradient background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 left-1/4 w-72 h-72 rounded-full bg-primary/5 blur-3xl animate-pulse opacity-40 dark:opacity-10" />
@@ -66,19 +66,13 @@ const Contact = () => {
 
       <div className="container px-6 relative z-10">
         {/* Header */}
-        <div ref={headerRef} className="max-w-3xl mx-auto text-center mb-12 reveal">
-          <div className="inline-block mb-3">
-            <span className="text-primary font-mono text-sm tracking-widest uppercase font-semibold px-3 py-1 bg-primary/10 rounded-full">
-              Let's Connect
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-3 transition-colors duration-300">
-            Ready to Automate Your Business?
-          </h2>
-          <p className="text-text-secondary text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            Schedule a free discovery call and let's explore how automation can transform your workflows and boost your productivity.
-          </p>
-        </div>
+        <SectionHeader
+          id="contact-heading"
+          label="Let's Connect"
+          title="Ready to Automate Your Business?"
+          highlight="Automate"
+          subtitle="Schedule a free discovery call and let's explore how automation can transform your workflows and boost your productivity."
+        />
 
         {/* Main Content Card Wrapper */}
         <div ref={formRef} className="max-w-5xl mx-auto reveal relative">

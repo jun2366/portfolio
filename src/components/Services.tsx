@@ -1,11 +1,12 @@
 import { Settings, GitBranch, Workflow, Plug, Zap } from "lucide-react";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import SectionHeader from "@/components/SectionHeader";
 
 const services = [
   {
     icon: Settings,
     title: "GoHighLevel CRM Setup & Optimization",
-    description: "Full CRM buildout tailored to your sales process — pipelines, automations, tags, and custom fields configured for maximum efficiency.",
+    description: "Full CRM buildout tailored to your sales process: pipelines, automations, tags, and custom fields configured for maximum efficiency.",
   },
   {
     icon: GitBranch,
@@ -20,7 +21,7 @@ const services = [
   {
     icon: Plug,
     title: "API & Webhook Integrations",
-    description: "Connect your tools seamlessly. Payment processors, calendars, email platforms — all synced and communicating in real-time.",
+    description: "Connect your tools seamlessly. Payment processors, calendars, email platforms, all synced and communicating in real-time.",
   },
   {
     icon: Zap,
@@ -30,21 +31,18 @@ const services = [
 ];
 
 const Services = () => {
-  const headerRef = useScrollReveal();
   const cardsRef = useScrollReveal();
 
   return (
-    <section id="services" className="py-24 relative">
+    <section id="services" aria-labelledby="services-heading" className="py-24 relative scroll-mt-16">
       <div className="container px-6">
-        <div ref={headerRef} className="max-w-2xl mb-16 reveal text-center mx-auto">
-          <p className="text-primary font-mono text-sm mb-3 tracking-wider uppercase">Services</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            What I Build
-          </h2>
-          <p className="text-text-secondary text-lg uppercase">
-            Automations, websites, and digital systems — designed to save you time and scale your business.
-          </p>
-        </div>
+        <SectionHeader
+          id="services-heading"
+          label="Services"
+          title="What I Build"
+          highlight="Build"
+          subtitle="Automations, websites, and digital systems, designed to save you time and scale your business."
+        />
 
         <div ref={cardsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger">
           {services.map((service, i) => (

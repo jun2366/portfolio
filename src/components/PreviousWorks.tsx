@@ -1,169 +1,31 @@
-import { ArrowUpRight } from "lucide-react";
-import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { ArrowUpRight, Maximize2 } from "lucide-react";
 import { useState } from "react";
-import zapierProjectImage from "@/assets/zapier-project1.png";
-import zapierProjectImage2 from "@/assets/zapier-project2.png";
-import bookingautomation from "@/assets/booking-automation.jpeg";
-import SellerBuyerAutomation from "@/assets/Seller and Buyer Automation.jpeg";
-import AIAgentforFacebookProject from "@/assets/AI Agent for Facebook Project.png";
-import AILeadQualifier from "@/assets/AI Lead Qualifier.png";
-import RetellAIIntegration from "@/assets/Retell AI n8n Integration.png";
-import IPCR  from "@/assets/ipcr-system.png";
-import ADU   from "@/assets/ADU.png";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import SectionHeader from "@/components/SectionHeader";
+import CaseStudyDialog from "@/components/CaseStudyDialog";
+import { projects, type Project } from "@/data/projects";
 
-
-
-
-interface Project {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  problem?: string;
-  solution?: string;
-  outcome?: string;
-  tags: string[];
-  image?: string;
-  link?: string;
-}
-
-const projects: Project[] = [
-  {
-    title: "Content Repurposing Workflow",
-    subtitle: "Zapier Automation",
-    description:
-      "End-to-end workflow that transforms video/audio files into blog posts and social media content. Triggered by Google Drive upload, it generates AI transcripts, creates blog posts, splits into loops, uses conditional paths, auto-posts to Facebook, and logs everything to Google Sheets.",
-    tags: ["Zapier", "AI", "Automation", "Google Sheets"],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=sharing",
-  },
-  {
-    title: "Asana CRM Lead Engagement Workflow",
-    subtitle: "Zapier Automation",
-    description:
-      "5-in-1 workflow automation for Asana CRM that handles the entire lead lifecycle. Includes folder creation with subtasks, follow-up sequences for unresponsive leads, quote follow-ups, personalized welcome emails with PDF attachments, and service recommendation emails with 3 variations based on service type.",
-    tags: ["Zapier", "asana", "crm", "Google-drive", "gmail"],
-    image: zapierProjectImage2,
-    link: "https://drive.google.com/drive/folders/1ECfmRqB27hrkZb3RRkG8qX7_pS0-xgpJ?usp=drive_link",
-  },
+const categories = [
+  "All",
+  "Zapier",
+  "n8n",
+  "GoHighLevel",
+  "Web Development",
   /*
-  {
-    title: "Automated Leads Enrichment",
-    subtitle: "Zapier Automation",
-    description:
-      "Fully automated lead-handling system that captures leads via webhook, enriches data using Apollo API, scores and prioritizes leads by company size, then routes them accordingly — high-priority leads get saved to Google Sheets, notified via Slack, and receive AI-generated personalized emails. Low-priority leads get a simple email notification.",
-    tags: ["Zapier", "Webhook", "Apollo", "Slack", "Google-Sheets", "AI"],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=drive_link",
-  },
+  "Webflow",
+  "WordPress",
+  "Website (Code)",
+  "Hostinger",
+  "Social Media Graphics"
   */
-  {
-    title: "AI Chatbot for Facebook Messenger",
-    subtitle: "n8n Automation",
-    description:
-      "Self-hosted AI chatbot that automatically responds to Facebook Messenger inquiries using a custom company knowledge base. Built with Google Gemini as the chat model, includes conversation memory for context-aware responses, and uses webhooks to connect with Facebook's API in real-time.",
-    tags: ["n8n", "Facebook", "Gemini", "Webhook", "Chatbot",],
-    image: AIAgentforFacebookProject,
-    link: "https://drive.google.com/drive/folders/1sWgYUY4hSmUtt11N_RwxacrvEuvsdfz2?usp=sharing",
-  },
-  {
-    title: "AI Lead Qualifier Automation",
-    subtitle: "n8n Automation",
-    description:
-      "Built an intelligent lead qualification system that automatically analyzes incoming inquiries using AI and routes them based on qualification status. The system scores leads, provides reasoning, and logs everything to Google Sheets for sales team follow-up.",
-    tags: ["n8n", "Ai", "Automation", "Google-Sheets", "llama-3.2",],
-    image: AILeadQualifier,
-    link: "https://drive.google.com/drive/folders/1Ur8gI6gtJEb86WASY8Zrnv6XdSHZDpLY?usp=sharing",
-  },
-  {
-    title: "Simple Retell Call Logger",
-    subtitle: "n8n Automation",
-    description:
-      "Automates call logging from Retell AI. Captures call details, transcripts, recordings, and sentiment/status, logging them directly to Google Sheets for analysis.",
-    tags: ["n8n", "Retell-AI", "Automation", "Google-Sheets", "Voice-AI",],
-    image: RetellAIIntegration,
-    link: "https://drive.google.com/drive/folders/1EEf71YGOHXqNIoLC_26LrM2DDjcbvIKV?usp=sharing",
-  },
-  {
-    title: "Booking Appointment & Reminder System",
-    subtitle: "GoHighLevel Automation",
-    description:
-      "Complete appointment management workflow handling 5,793+ contacts. Triggers on booking, removes lead from nurture, creates/updates opportunity, sends confirmation email, then delivers 24-hour and 1-hour reminder emails + SMS to reduce no-shows.",
-    tags: ["GoHighLevel", "crm", "Automation", "sms", "email",],
-    image: bookingautomation,
-    link: "https://drive.google.com/drive/folders/1RnByj26vutw2PyaTSjpOxIsV7cHb-mZI?usp=sharing",
-  }, 
-  {
-    title: "Smart Lead Routing for Real Estate",
-    subtitle: "GoHighLevel Automation",
-    description:
-      "Intelligent lead qualification system for Single Tree Team real estate. Routes survey submissions by lead type (Buyer/Seller/Both), auto-tags contacts, creates pipeline opportunities, syncs to KvCore CRM via webhook, and triggers follow-up sequences for unresponsive leads.",
-    tags: ["GoHighLevel", "crm", "real-estate", "automation", "webhook",],
-    image: SellerBuyerAutomation,
-    link: "https://drive.google.com/drive/folders/1rhZuHOrB8j5hXnqA6eESEd4d-_hNGViO?usp=sharing",
-  },
-  
-  {
-    title: "IPCR Management System",
-    subtitle: "Streamlining Employee Performance Evaluation and Reporting",
-    description:
-      "A web-based performance evaluation platform that digitizes the Individual Performance Commitment and Review (IPCR) process. The system enables users to manage performance targets, automate rating calculations, generate narrative assessments, and produce printable reports, improving accuracy and efficiency in employee performance evaluation workflows. Built using Core PHP, HTML, CSS, JavaScript, and MySQL/JSON-based data storage.",
-    tags: ["PHP", "MySQL", "HTML", "CSS", "html", "Data Management","Performance Management", "Web Development"],
-    image: IPCR,
-    link: "https://github.com/jun2366/IPCR.git",
-  }, 
-  
-  {
-    title: "ADU Exchange (United States)",
-    subtitle: "Frontend Development",
-    description:
-      "Developed a responsive lead-generation website for a U.S.-based ADU (Accessory Dwelling Unit) consulting and development company. The platform was designed to educate homeowners on ADU opportunities, showcase services, and convert visitors into qualified leads through strategic call-to-actions and conversion-focused user experience. Built using a custom frontend stack consisting of HTML5, Tailwind CSS, and JavaScript, with integrated marketing analytics and tracking tools to support campaign performance measurement and customer acquisition efforts.",
-    tags: ["JavaScript", "Tailwind CSS", "HTML 5", "UI/UX", "Marketing Website", "Web Development", "Lead Generation", "Responsive Design"],
-    image: ADU,
-    link: "https://www.theaduexchange.com/",
-  },
-   /*
-  {
-    title: "ASV Development – Construction Company Website",
-    subtitle: "Business Website Development",
-    description:
-      "A clean and professional construction company website built on Hostinger, featuring service sections, recent projects, customer testimonials, and clear contact and quotation call-to-actions designed to build trust and generate leads.",
-    tags: ["Hostinger", "construction", "web-development", "business", "medicare", "ui-design", "service-business"],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=drive_link",
-  }, 
-  {
-    title: "Weather API Application",
-    subtitle: "API-Based Web Application",
-    description:
-      "A simple weather web application that allows users to search for any city and view real-time weather data using the OpenWeatherMap API, presented with a clean UI and responsive layout.",
-    tags: ["Website", "api", "weather-app", "javascript", "openweathermap", "web-development", "portfolio-preject",],
-    image: zapierProjectImage,
-    link: "https://drive.google.com/drive/folders/1Ba-_CDkw2PVAjQ4cdkdH2jZGf5ql02h4?usp=drive_link",
-  },
-  */ 
 ];
 
 const PreviousWorks = () => {
-  const headerRef = useScrollReveal();
   const cardsRef = useScrollReveal();
-
-  const categories = [
-    "All",
-    "Zapier",
-    "n8n",
-    "GoHighLevel",
-    "Web Development",
-    /*
-    "Webflow",
-    "WordPress",
-    "Website (Code)",
-    "Hostinger",
-    "Social Media Graphics"
-    */
-    ,
-  ];
-
   const [activeCategory, setActiveCategory] = useState<string>("All");
+  // Kept after closing so the modal can play its exit animation with content still in place.
+  const [selected, setSelected] = useState<Project | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filteredProjects =
     activeCategory === "All"
@@ -176,29 +38,34 @@ const PreviousWorks = () => {
           return p.tags.includes(activeCategory);
         });
 
+  const openCaseStudy = (project: Project) => {
+    setSelected(project);
+    setDialogOpen(true);
+  };
+
   return (
-    <section id="work" className="py-24">
+    <section id="work" aria-labelledby="work-heading" className="scroll-mt-16 py-24">
       <div className="container px-6">
-        <div ref={headerRef} className="max-w-2xl mb-16 reveal text-center mx-auto">
-          <p className="text-primary font-mono text-sm mb-3 tracking-wider uppercase">Previous Work</p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Project Sample
-          </h2>
-          <p className="text-text-secondary text-lg uppercase">
-            Sample builds showcasing how automation transforms operations.
-          </p>
-        </div>
+        <SectionHeader
+          id="work-heading"
+          label="Previous Work"
+          title="Project Sample"
+          highlight="Sample"
+          subtitle="Sample builds showcasing how automation transforms operations."
+        />
 
         {/* filter buttons */}
-        <div className="flex flex-wrap gap-2 mb-8 justify-center">
+        <div className="mb-8 flex flex-wrap justify-center gap-2" role="group" aria-label="Filter projects by category">
           {categories.map((cat) => (
             <button
               key={cat}
+              type="button"
+              aria-pressed={activeCategory === cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+              className={`rounded-full border px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 activeCategory === cat
-                  ? "bg-purple-600 text-white"
-                  : "bg-secondary/20 text-text-primary hover:bg-secondary/30"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-secondary text-foreground hover:border-primary/40"
               }`}
             >
               {cat}
@@ -206,73 +73,71 @@ const PreviousWorks = () => {
           ))}
         </div>
 
-        <div ref={cardsRef} className="grid lg:grid-cols-2 gap-6 reveal-stagger">
-          {filteredProjects.map((project, i) => (
-            <div
-              key={i}
-              className="surface-card flex flex-col hover:border-primary/30 group click-scale cursor-default overflow-hidden"
+        <div ref={cardsRef} className="grid gap-6 lg:grid-cols-2 reveal-stagger">
+          {filteredProjects.map((project) => (
+            <article
+              key={project.title}
+              className="surface-card group relative flex flex-col overflow-hidden hover:border-primary/30"
             >
               {project.image && (
-                <div className="w-full h-52 overflow-hidden border-b border-border">
+                <div className="relative h-52 w-full overflow-hidden border-b border-border">
                   <img
                     src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-500"
+                    alt=""
+                    loading="lazy"
+                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   />
                 </div>
               )}
 
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold">{project.title}</h3>
+              <div className="flex flex-1 flex-col p-6">
+                <p className="mb-2 font-mono text-xs uppercase tracking-wider text-primary">{project.category}</p>
+                <h3 className="mb-3 text-lg font-bold">
+                  {/* Stretched button: the whole card is clickable, but only this one control is in the tab order. */}
+                  <button
+                    type="button"
+                    aria-haspopup="dialog"
+                    onClick={() => openCaseStudy(project)}
+                    className="text-left after:absolute after:inset-0 after:rounded-xl after:content-[''] hover:text-primary focus:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
+                  >
+                    {project.title}
+                  </button>
+                </h3>
+                <p className="flex-1 text-sm leading-relaxed text-text-secondary">{project.overview}</p>
+
+                <ul className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4" aria-label="Tools">
+                  {project.tags.map((tag) => (
+                    <li key={tag} className="rounded-md bg-primary/10 px-2.5 py-1 font-mono text-xs text-primary">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                  <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground" aria-hidden="true">
+                    <Maximize2 className="h-4 w-4 text-primary" />
+                    View case study
+                  </span>
                   {project.link && (
                     <a
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-primary hover:underline"
-                      onClick={(e) => e.stopPropagation()}
+                      className="relative z-10 inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                     >
                       View Project
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span className="sr-only"> for {project.title} (opens in a new tab)</span>
                     </a>
                   )}
-                  {!project.link && (
-                    <ArrowUpRight className="w-4 h-4 text-text-tertiary group-hover:text-primary transition-colors duration-200" />
-                  )}
-                </div>
-                <div className="space-y-4 flex-1">
-                  {project.subtitle && (
-                    <p className="text-xs font-mono text-primary uppercase tracking-wider mb-1">
-                      {project.subtitle}
-                    </p>
-                  )}
-                  {project.description && (
-                    <p className="text-sm text-text-secondary leading-relaxed">
-                      {project.description}
-                    </p>
-                  )}
-                </div>                
-                <div className="space-y-4 flex-1">
-                  {project.description && (
-                    <p className="text-sm text-text-secondary leading-relaxed">
-                      {project.description}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-6 pt-4 border-t border-border">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="text-xs font-mono px-2.5 py-1 rounded-md bg-primary/10 text-primary">
-                      {tag}
-                    </span>
-                  ))}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>
+
+      <CaseStudyDialog project={selected} open={dialogOpen} onOpenChange={setDialogOpen} />
     </section>
   );
 };
