@@ -99,9 +99,11 @@ const SceneSetup = () => {
 interface EarthCanvasProps {
   className?: string;
   variant?: "showcase" | "inline";
+  /** Star halo around the inline Earth. Defaults to on; pass false to hide it. */
+  halo?: boolean;
 }
 
-const EarthCanvas = ({ className, variant = "showcase" }: EarthCanvasProps) => {
+const EarthCanvas = ({ className, variant = "showcase", halo = true }: EarthCanvasProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const isInline = variant === "inline";
 
@@ -146,7 +148,7 @@ const EarthCanvas = ({ className, variant = "showcase" }: EarthCanvasProps) => {
         />
 
         <Suspense fallback={null}>
-          {isInline && <Stars variant="halo" count={isMobile ? 600 : 900} />}
+          {isInline && halo && <Stars variant="halo" count={isMobile ? 600 : 900} />}
           <Earth />
           <Preload all />
         </Suspense>

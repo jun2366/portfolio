@@ -77,12 +77,10 @@ const Contact = () => {
         {/* Main Content Card Wrapper */}
         <div ref={formRef} className="max-w-5xl mx-auto reveal relative">
           
-          {/* Subtle sky/pink radial glow behind the Earth (theme tokens) */}
-          <div className="absolute bottom-0 left-0 -translate-x-[35%] translate-y-[35%] w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full bg-[radial-gradient(circle,hsl(var(--glow)/0.25)_0%,hsl(var(--highlight)/0.12)_45%,transparent_70%)] blur-xl pointer-events-none z-10" />
-
           {/* Floating 3D Earth */}
           <div className="absolute bottom-0 left-0 -translate-x-[35%] translate-y-[35%] w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 z-20 pointer-events-auto">
-            <EarthCanvas variant="inline" className="w-full h-full" />
+            {/* Halo stars and the glow behind the Earth were removed; the Earth itself is kept. */}
+            <EarthCanvas variant="inline" halo={false} className="w-full h-full" />
           </div>
 
           {/* Premium Get in Touch Card */}
